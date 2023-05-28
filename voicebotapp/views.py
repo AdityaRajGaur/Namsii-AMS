@@ -59,6 +59,7 @@ def chatbot(request):
             return JsonResponse(data)
 
     return render(request, 'chatbot.html')
+    
 
 
 def process_response(message):
