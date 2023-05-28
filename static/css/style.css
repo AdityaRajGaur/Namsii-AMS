@@ -1,0 +1,49 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  
+  h1 {
+    color: #333;
+  }
+  
+  #voice-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  #voice-button:hover {
+    background-color: #45a049;
+  }
+  
+  #transcription {
+    width: 400px;
+    height: 200px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    overflow-y: scroll;
+    background-color: #f5f5f5;
+    font-size: 14px;
+  }
+  
+  #transcription::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  #transcription::-webkit-scrollbar-thumb {
+    background-color: #888;
+  }
+  
+  #transcription::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+  
+  #transcription::-webkit-scrollbar-track {
+    background-color: #f5f5f5;
+  }
+  

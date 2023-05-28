@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Voice Chatbot</title>
+    {% load static %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!--link rel="stylesheet" type="text/css" href="{% static 'css/style1.css' %}"-->
+<link rel="stylesheet" type="text/css" href="{% static 'css/style3.css' %}">
+
+</head>
+<body>
+  <div class="chat-container">
+    <div id="chat-log" class="chat-log"></div>
+  <!--div id="chat-log" class="chat-log"></div-->
+
+
+<div class="container">
+<h1>Voice Chatbot</h1>
+<!--div class="chat-log">
+<textarea id="chat-log" rows="10" cols="80" readonly></textarea>
+</div-->
+<div class="input-container">
+<form id="chat-form">
+                {% csrf_token %}
+<input type="text" id="entry-box" name="message" placeholder="Enter your message...">
+<button type="submit">Send</button>
+</form>
+<button id="audiobutton" onclick="startVoiceInput()">Speak</button>
+</div>
+</div>
+
+ 
+
+    <script>
+      // Append a new message to the chat log
+      //function appendMessage(message) {
+      //var chatLog = $('#chat-log');
+      //var messageElement = $('<p>').text(message);
+     // chatLog.append(messageElement);
+    //}
+
+
+
+
+
+
+        document.getElementById("chat-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var formData = new FormData(event.target);
+            var csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+            formData.append('csrfmiddlewaretoken', csrftoken);
+
+ 
+            
+            var userMessage = document.getElementById('entry-box').value;
+            var chatLog = document.getElementById('chat-log');
+
+            // Clear input field
+            document.getElementById('entry-box').value = '';
+
+            //chatLog.innerHTML += 'You: ' + userMessage + '\n';
+            chatLog.innerHTML += '<p class="user-message">You: ' + userMessage + '</p>\n';
+
+            chatLog.scrollTop = chatLog.scrollHeight;
+
+ 
+
+            $.ajax({
+                type: 'POST',
+                url: 'chatbot',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    //chatLog.innerHTML += 'Bot: ' + response.response + '\n';
+                    chatLog.innerHTML += '<p class="bot-message">Bot: ' + response.response + '</p>\n';
+
+                    chatLog.scrollTop = chatLog.scrollHeight;
+                },
+                error: function() {
+                    console.log('Error occurred.');
+                }
+            });
+        });
+
+ 
+
+        function startVoiceInput() {
+            var recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+
+ 
+
+            recognition.onresult = function(event) {
+                var result = event.results[event.results.length - 1];
+                var voiceText = result[0].transcript;
+
+ 
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'chatbot',
+                    data: { 'voice_data': voiceText },
+                    beforeSend: function(xhr, settings) {
+                        xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                    },
+                    success: function(response) {
+                        var chatLog = document.getElementById('chat-log');
+                        //chatLog.innerHTML += 'You: ' + voiceText + '\n';
+                        chatLog.innerHTML += '<p class="user-message">You: ' + voiceText + '</p>\n';
+
+                        
+                        //chatLog.innerHTML += 'Bot: ' + response.response + '\n';
+
+                        chatLog.innerHTML += '<p class="bot-message">Bot: ' + response.response + '</p>\n';
+
+                        chatLog.scrollTop = chatLog.scrollHeight;
+                    },
+                    error: function() {
+                        console.log('Error during voice input.');
+                    }
+                });
+            };
+
+ 
+
+            recognition.start();
+        }
+</script>
+</body>
+</html>
