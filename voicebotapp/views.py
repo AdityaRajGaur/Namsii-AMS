@@ -4,7 +4,7 @@ import speech_recognition as sr
 
 import pyttsx3
 import os
-import azure.cognitiveservices.speech as speechsdk
+#import azure.cognitiveservices.speech as speechsdk
 from .Jira_ticket import Rest_api_jira_call
 import json
 
@@ -56,10 +56,11 @@ def chatbot(request):
             data = {'response': response}
             print("data", data)
             voice_output(data["response"])
+            #value = data.get('response')
             return JsonResponse(data)
 
     return render(request, 'chatbot.html')
-    
+
 
 
 def process_response(message):
@@ -73,12 +74,15 @@ def process_response(message):
     #    return "I'm sorry, I didn't understand. Please type something!"
 
     if message.lower() in ["hello.", "hi.", "good morning.", "what's up", "yo", "how are you", "how are you?", "how are you.", "how r u?"]:
-        return 'Hi, I am a Jira Voice Bot. How can I help you!'
+        return 'Hi, I am a Ally Voice Bot. How can I help you!'
 
-    elif message.lower() in ["create jira ticket.", "create a ticket.", "start a new ticket.", "open a jira ticket", "make a jira ticket", "report a bug", "start a ticket", "start new ticket", "a jira ticket", "initiate a jira ticket.", "enerate a Jira ticket.", "set up a jira ticket.", "establish a jira ticket.", "craft a jira ticket.", "begin a jira ticket.", "create a new jira task.", "Set up a new Jira ticket.", "I want to create JIRA ticket. "]:
-        #return "Sure. Could you please tell me the issue details!"
+    elif message.lower() in ["i want to create jira ticket.","create jira ticket.", "create a ticket.", "start a new ticket.", "open a jira ticket", "make a jira ticket", "report a bug", "start a ticket", "start new ticket", "a jira ticket", "initiate a jira ticket.", "enerate a Jira ticket.", "set up a jira ticket.", "establish a jira ticket.", "craft a jira ticket.", "begin a jira ticket.", "create a new jira task.", "Set up a new Jira ticket.", "I want to create JIRA ticket. "]:
+        return "Sure. Could you please tell me the issue details!"
+
+    elif ("I have an issue" in message) or ("I am working on" in message) or ("I am facing issue" in message) or ("I'm facing issue" in message):
         print("Inside the Issue detail condition")
         response = jiraApi(message)
+            #response = {'response': response}
         return response
             
 
@@ -113,28 +117,32 @@ def jiraApi(request):
 
     #if ("I have an issue" in message) or ("I am working on" in message) or ("I am facing issue" in message):
     print("matched! for creating jira ticket using description")
-    description1 = "Test case using bot"
-    summary1 = "TestfromPython"
+    description1 = request
+    summary1 = "TestfromPython-1"
     print(description1, summary1)
     #import json
-    result1, result2 = Rest_api_jira_call(summary1, description1)
-    print("result1:", result1)
-    print("result2:", result2)
+    result = Rest_api_jira_call(summary1, description1)
+    #result1, result2, result3 = Rest_api_jira_call(summary1, description1)
+    print("result1:", result)
+    #print("result2:", result2)
+    #print("result3", result3)
     success = 0
 
     if (success == 0):
         # elif (message == "No. You can proceed with the same." or message == "No.You can proceed with the same." or message == "You can proceed with the same." or message == "Issue type is fine." or message == "Go ahead." or message == "No problem. Go ahead." or message == "No problem Go ahead."):
         #response = "Sure. Please allow me sometime to generate JIRA ticket. I will update soon."
         #return(result1,result2)
-        response = "Jira Ticket created successfully"
-        return response
-        response = result1
+        #result = "Jira Ticket created successfully"
+        
+        return result
+        #response = result1
         
 
-        response = result2
+        #response = result2
         
 
-        print(response)
+
+        print(result)
 
 
 #    from .speech_recognition1 import recognize_from_microphone
