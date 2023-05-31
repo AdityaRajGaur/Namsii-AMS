@@ -17,8 +17,8 @@ from subprocess import Popen
 
 
 
-def index(request):
-    return render(request, 'index.html')
+def openapp(request):
+    return render(request, 'openapp.html')
 
 
 def chatbot(request):
@@ -59,7 +59,7 @@ def chatbot(request):
             #value = data.get('response')
             return JsonResponse(data)
 
-    return render(request, 'chatbot.html')
+    return render(request, 'chatbot_blue.html')
 
 
 

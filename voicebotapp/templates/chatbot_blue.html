@@ -5,18 +5,46 @@
     {% load static %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!--link rel="stylesheet" type="text/css" href="{% static 'css/style1.css' %}"-->
-<link rel="stylesheet" type="text/css" href="{% static 'css/style4.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/style_blue.css' %}">
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=0.8">
 
 </head>
 
+
 <body>
+<div class="information">
+    <header>
+        <h1 class="Headline">Welcome to our Ally -The Jira Bot</h1>
+        <!--img class="bot-logo" src="bot-logo.png" alt="Bot Logo"-->
+      </header>
+    
+      <main>
+        <section class="section">
+            <img class="intro-img" src="{% static 'images/intro-img.png' %}" alt="">
+    
+        <section class"section">
+          <h2>About Ally</h2>
+          <p>This bot will be your personal Voice Assistant. It utilizes voice commands to interact with the Jira project management tool. It allows users to perform various actions and operations in Jira using natural language voice commands instead of traditional manual input methods. The Voice Jira Bot acts as a voice-based interface layer that bridges the gap between the user and Jira, enabling hands-free and convenient interaction.</p>
+        </section>
+      </main>
+    
+      <!--footer>
+        <p>&copy; 2023 Ally-The Jira Bot. All rights reserved.</p>
+      </footer-->
+
+
+    </div>
+
+
 <div class="chatbot-container">
     <div id="header">
-        <h1>Ally
-            <img class="bot-titleimg" src="{% static 'images/botimg1-64.png' %}" alt="">
+        
+        <h1 id="h1">
+
+            <img class="header-icon" src="{% static 'images/bot-img.png' %}" alt="">
+             <span class="ally-text">Ally</span>
         </h1>
             
             
@@ -26,21 +54,26 @@
             <div id="chat-log" class="chat-log">
             
                 <!--p class="user-message"></p-->
-                <p class="bot-text">Hi! 👋 it's great to see you!</p>
+                <!--p class="bot-text">Hi! 👋 it's great to see you!</p-->
             </div>
         </div>
+        <div style="margin-top: 85px;">
+        <button id="audiobutton" onclick="startVoiceInput()">
+            <img id="micoff" class="mic-icon" src="{% static 'images/mic-blue.png' %}" alt="">
+        </button>
+    </div>
 		<form id="chat-form">
 		    <message-container>
                 {% csrf_token %}
-                <input type="text" id="entry-box" name="message" placeholder="Enter your message...">
+                <input type="text" id="entry-box" name="message" placeholder="Enter your message..">
                 <button id="submit-button" type="submit">
-                    <img class="send-icon" src="{% static 'images/send-message1.png' %}" alt="">
+                    <img class="send-icon" src="{% static 'images/send-blue.png' %}" alt="">
                 </button>
             </message-container>
         </form>
-        <button id="audiobutton" onclick="startVoiceInput()">
-            <img id="micoff" class="mic-icon" src="{% static 'images/mic-off.png' %}" alt="">
-        </button>
+        <!--button id="audiobutton" onclick="startVoiceInput()">
+            <img id="micoff" class="mic-icon" src="{% static 'images/mic-off1.png' %}" alt="">
+        </button-->
 
     </div>
 </div>
@@ -57,7 +90,11 @@
     //}
 
 
-
+    setTimeout(function() {
+        var chatLog = document.getElementById('chat-log');
+        chatLog.innerHTML += `<p class="bot-text">Hi! 👋 it's great to see you!</p>`;
+        //chatLog.appendChild(chatLog);
+      }, 3500);
 
 
 
@@ -117,7 +154,7 @@
                         
                         
                         //else if (response.results.length === 1) { 
-                            chatLog1.innerHTML += `<img class="botimg" src="{% static 'images/bot1.png' %}" alt="">`
+                            //chatLog1.innerHTML += `<img class="botimg" src="{% static 'images/bot1.png' %}" alt="">`
                             chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`; 
                         //}
                                 
@@ -145,7 +182,7 @@
             let micImageOff = document.getElementById("micoff");
             let micImageOn = document.createElement("micon");
             micImageOff.remove(micImageOff);
-            audiobutton.innerHTML += `<img id="micon" class="mic-iconOn" src="{% static 'images/mic-on.png' %}" alt="">`;
+            audiobutton.innerHTML += `<img id="micon" class="mic-iconOn" src="{% static 'images/mic-blue.png' %}" alt="">`;
             //audiobutton.appendChild(micImageOn);
             
               
@@ -172,7 +209,7 @@
                 //let micImageOn = document.createElement("micon");
                 micImageOn = document.getElementById("micon");
                 micImageOn.remove(micImageOn);
-                audiobutton.innerHTML += `<img id="micoff" class="mic-icon" src="{% static 'images/mic-off.png' %}" alt="">`;
+                audiobutton.innerHTML += `<img id="micoff" class="mic-icon" src="{% static 'images/mic-blue.png' %}" alt="">`;
                 //audiobutton.appendChild(micImageOff);
 
                 let chatLog1 = document.createElement('div');
