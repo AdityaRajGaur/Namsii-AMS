@@ -73,6 +73,7 @@
                 contentType: false,
                 success: function(response) {
                     //chatLog.innerHTML += 'Bot: ' + response.response + '\n';
+                    
                     chatLog.innerHTML += '<p class="bot-message">Bot: ' + response.response + '</p>\n';
 
                     chatLog.scrollTop = chatLog.scrollHeight;

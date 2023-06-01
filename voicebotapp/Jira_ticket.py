@@ -3,12 +3,11 @@ import json
 import os
 
 
-def Rest_api_jira_call(summary,description):
+def Rest_api_jira_call(project,summary,description):
 # Jira API endpoint and authentication details
     url = "https://jira.nagarro.com/rest/api/2/issue/"
-    import json
-    print("inside the function")
-    print(summary,description)
+    print("inside the function fro rest api call")
+    print(project,summary,description)
     # Get the current working directory
     cwd = os.getcwd()
     print(cwd)
@@ -62,9 +61,8 @@ def Rest_api_jira_call(summary,description):
         issue_key = response.json()["key"]
         print("Issue Number:", issue_key)
         link= "https://jira.nagarro.com/browse/"+ issue_key
-        return (issue_key, link)
+        return issue_key
     else:
         print("Failed to create issue. Status code:", response.status_code)
         print("Error message:", response.text)
-
-#Rest_api_jira_call(summary1, description1)
+        return response.text

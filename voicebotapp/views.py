@@ -1,39 +1,55 @@
 from django.shortcuts import render
-
 import speech_recognition as sr
-
 import pyttsx3
-import os
-import azure.cognitiveservices.speech as speechsdk
 from .Jira_ticket import Rest_api_jira_call
-import json
-
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from .openAi_extract_detail import open_api_call
+from .response_handler import process_response
+from .speech_recognition1 import recognize_from_microphone
 
-from subprocess import Popen
-#from jira_api import Rest_api_jira_call
-
-
-
+previous_response = ""
 
 def index(request):
     return render(request, 'index.html')
 
 
 def chatbot(request):
-    from .speech_recognition1 import recognize_from_microphone
-
+    global previous_response
+    data ={}
     if request.method == 'POST':
         if 'voice_data' in request.POST:
             # Handle voice input
             voice_data = request.POST['voice_data']
             print(voice_data)
-            # text_result = recognize_from_microphone()
-            # print(text_result)
-            if voice_data:
+            #check if previous response was add details then extract details and create ticket
+                #project,sum,des  = extract_ticket_details(voice_data)
+            if previous_response in ['Ok, Please provide project name,description and summary for your ticket.']:
+                print("Get text user inputs for fetching details with message :",voice_data)
+                try:
+                    proj,sum,des = open_api_call(voice_data)
+                    print('project,summary and description from open ai call is: ', proj,sum,des)
+                except:
+                        print('Issue with the open api call')
+                        return 'Error fetching details from openAI api'
+                try:
+                    issue_key = Rest_api_jira_call(proj,sum,des)  
+                    print(issue_key)
+                except:
+                    print("Error connecting via JIRA api")
+                    return 'Error connecting to JIRA api'
+                if issue_key:
+                    url = 'https://jira.nagarro.com/rest/api/2/issue/'+issue_key
+                    output = 'Ticket created successfully,'+' Ticket number is: '+issue_key+' Link for ticket: '+url
+                    print(output)
+                    data = {'response':output}
+                    print(data)
+                    previous_response = ""   
+                    response = output     
+            
+            elif voice_data:
                 # Process the text result and generate a response
                 response = process_response(voice_data)
+                
             else:
                 response = "Sorry, I couldn't recognize your speech."
 
@@ -44,7 +60,7 @@ def chatbot(request):
             print("data", data)
 
             # response = process_response(voice_data)
-
+            previous_response = response
             voice_output(data["response"])
             return JsonResponse(data)
 
@@ -52,53 +68,40 @@ def chatbot(request):
             # Handle text input
             message = request.POST['message']
             print("message in view.py", message)
-            response = process_response(message)
+            if previous_response in ['Ok, Please provide project name,description and summary for your ticket.']:
+                print("Get text user inputs for fetching details with message :",message)
+                try:
+                    proj,sum,des = open_api_call(message)
+                    print('project,summary and description from open ai call is: ', proj,sum,des)
+                except:
+                        print('Issue with the open api call')
+                        return 'Error fetching details from openAI api'
+                try:
+                    issue_key = Rest_api_jira_call(proj,sum,des)  
+                    print(issue_key)
+                except:
+                    print("Error connecting via JIRA api")
+                    return 'Error connecting to JIRA api'
+                if issue_key:
+                    url = 'https://jira.nagarro.com/rest/api/2/issue/'+issue_key
+                    output = 'Ticket created successfully,'+' Ticket number is: '+issue_key+' Link for ticket: '+url
+                    print(output)
+                    data = {'response':output}
+                    print(data)
+                    previous_response = ""   
+                    response = output             
+
+            else:
+                response = process_response(message)
+
+            previous_response = response
             data = {'response': response}
-            print("data", data)
             voice_output(data["response"])
-            return JsonResponse(data)
+        return JsonResponse(data)
 
+    
     return render(request, 'chatbot.html')
-
-
-def process_response(message):
-    # if message == 'Hello.':
-    #    return 'Hi there!'
-
-    # elif message.lower() in ["yes.", "i want to create a jira ticket."]:
-    #    return "Could you please tell me the project name?"
-
-    # else:
-    #    return "I'm sorry, I didn't understand. Please type something!"
-
-    if message.lower() in ["hello.", "hi.", "good morning.", "what's up", "yo", "how are you", "how are you?", "how are you.", "how r u?"]:
-        return 'Hi, I am a Jira Voice Bot. How can I help you!'
-
-    elif message.lower() in ["create jira ticket.", "create a ticket.", "start a new ticket.", "open a jira ticket", "make a jira ticket", "report a bug", "start a ticket", "start new ticket", "a jira ticket", "initiate a jira ticket.", "enerate a Jira ticket.", "set up a jira ticket.", "establish a jira ticket.", "craft a jira ticket.", "begin a jira ticket.", "create a new jira task.", "Set up a new Jira ticket.", "I want to create JIRA ticket. "]:
-        #return "Sure. Could you please tell me the issue details!"
-        print("Inside the Issue detail condition")
-        response = jiraApi(message)
-        return response
-            
-
-
-#############
-# Furture Improvement:
-# Return response 'Requesting details' & capturing & creating jira ticket
-#############
-
-    elif message.lower() in ["fine.", "i am good.", "i am doing good.", "i'm good."]:
-
-        return "Great! How can I help you?"
-
-    elif message.lower() in ["thank you.", "thanks a lot.", "appreciate it."]:
-
-        return "You're welcome! If you need any further assistance, feel free to ask."
-
-    else:
-
-        return "I'm sorry, but I couldn't understand your request. Could you please rephrase or provide more information?"
-
+    
 
 def voice_output(request):
 
@@ -106,64 +109,3 @@ def voice_output(request):
 
     engine.say(request)
     engine.runAndWait()
-
-
-def jiraApi(request):
-
-    #if ("I have an issue" in message) or ("I am working on" in message) or ("I am facing issue" in message):
-    print("matched! for creating jira ticket using description")
-    description1 = "Test case using bot"
-    summary1 = "TestfromPython"
-    print(description1, summary1)
-    #import json
-    result1, result2 = Rest_api_jira_call(summary1, description1)
-    print("result1:", result1)
-    print("result2:", result2)
-    success = 0
-
-    if (success == 0):
-        # elif (message == "No. You can proceed with the same." or message == "No.You can proceed with the same." or message == "You can proceed with the same." or message == "Issue type is fine." or message == "Go ahead." or message == "No problem. Go ahead." or message == "No problem Go ahead."):
-        #response = "Sure. Please allow me sometime to generate JIRA ticket. I will update soon."
-        #return(result1,result2)
-        response = "Jira Ticket created successfully"
-        return response
-        response = result1
-        
-
-        response = result2
-        
-
-        print(response)
-
-
-#    from .speech_recognition1 import recognize_from_microphone
-
-#    message = recognize_from_microphone()
-#    print(speech_recognition_result)
-    # response = process_response(speech_recognition_result)
-    # data = {'result': response}
-    # return JsonResponse(data)
-
-#    if request.method == 'POST':
-#        voice_data = request.POST.get('voice_data')
-
-    # Process the voice data and generate a response
-#        response = process_response(voice_data)
-#        print(response)
-
-    # Create a dictionary with the response
-#        data = {'result': response}
-
-#        return JsonResponse(data)
-
-    # voice_i = speech_reco
-    # print (process1);
-
-# def send_message(request):
-#    if request.method == 'POST':
-#        message = request.POST.get('message')
-    # Process the message and generate a bot response
-#        response = process_response(message)
-#        return JsonResponse({'response': response})
-
-#   return render(request, 'chatbot.html')
