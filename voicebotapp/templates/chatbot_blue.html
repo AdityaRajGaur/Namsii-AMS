@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html>
+    {% load static %}
 <head>
 <title>Ally-The Bot</title>
-    {% load static %}
+<link rel="icon" href="{% static 'images/bot-icon.png' %}" alt="">
+
+
+    
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src={% static 'js/script.js' %}></script>
 <!--link rel="stylesheet" type="text/css" href="{% static 'css/style1.css' %}"-->
 <link rel="stylesheet" type="text/css" href="{% static 'css/style_blue.css' %}">
 <meta charset="UTF-8">
@@ -16,7 +21,7 @@
 <body>
 <div class="information">
     <header>
-        <h1 class="Headline">Welcome to our Ally -The Jira Bot</h1>
+        <h1 class="Headline"> Ally - The Jira Bot</h1>
         <!--img class="bot-logo" src="bot-logo.png" alt="Bot Logo"-->
       </header>
     
@@ -25,8 +30,20 @@
             <img class="intro-img" src="{% static 'images/intro-img.png' %}" alt="">
     
         <section class"section">
-          <h2>About Ally</h2>
-          <p>This bot will be your personal Voice Assistant. It utilizes voice commands to interact with the Jira project management tool. It allows users to perform various actions and operations in Jira using natural language voice commands instead of traditional manual input methods. The Voice Jira Bot acts as a voice-based interface layer that bridges the gap between the user and Jira, enabling hands-free and convenient interaction.</p>
+            <p>Create Jira tickets effortlessly using voice commands and messages with Ally. Our bot provides a seamless and convenient way to generate Jira tickets for your projects. Simply issue the command "create Jira ticket" to get started.</p>
+
+            <h2>How it Works:</h2>
+            <ol>
+              <li>Start by saying or typing "create Jira ticket" to initiate the ticket creation process.</li>
+              <li>Ally will respond and guide you through the necessary steps to provide the ticket's summary and description.</li>
+              <li>You can either speak the information or type it as a message.</li>
+              <li>Once you've provided the required details, Ally will create the Jira ticket and assign a ticket number to it.</li>
+              <li>Ally will confirm the successful creation of the ticket and provide you with the ticket number for reference.</li>
+            </ol>
+          
+            <!--p><strong>Note:</strong> If you have multiple Jira projects, please specify the project name or key as part of the command. For example, you can say "create Jira ticket in Project X" to create a ticket in a specific project.</p>
+          
+            <p>Enjoy the convenience of creating Jira tickets using voice commands and messages with Ally. Get started now and streamline your project management process!</p-->   
         </section>
       </main>
     
@@ -81,7 +98,7 @@
 
  
 
-    <script>
+    <!--script>
       // Append a new message to the chat log
       //function appendMessage(message) {
       //var chatLog = $('#chat-log');
@@ -92,6 +109,7 @@
 
     setTimeout(function() {
         var chatLog = document.getElementById('chat-log');
+        //chatLog.innerHTML += `<img class="botchatimg" src="{% static 'images/botchatimg.png' %}" alt="">`;
         chatLog.innerHTML += `<p class="bot-text">Hi! 👋 it's great to see you!</p>`;
         //chatLog.appendChild(chatLog);
       }, 3500);
@@ -120,6 +138,7 @@
 
             let chatLog1 = document.createElement('div');
             //chatLog1.classList.add('chat-log', 'user-message');
+            //chatLog1.innerHTML += `<img class="userchatimg" src="{% static 'images/userchatimg.png' %}" alt="">`;
             chatLog1.innerHTML += `<p class="user-message" sentTime="${currentTime}">${userMessage}</p>`;
 			conversation.appendChild(chatLog1);
             chatLog1.scrollTop = chatLog.scrollHeight;
@@ -154,7 +173,7 @@
                         
                         
                         //else if (response.results.length === 1) { 
-                            //chatLog1.innerHTML += `<img class="botimg" src="{% static 'images/bot1.png' %}" alt="">`
+                            //chatLog1.innerHTML += `<img class="botchatimg" src="{% static 'images/botchatimg.png' %}" alt="">`;
                             chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`; 
                         //}
                                 
@@ -182,7 +201,7 @@
             let micImageOff = document.getElementById("micoff");
             let micImageOn = document.createElement("micon");
             micImageOff.remove(micImageOff);
-            audiobutton.innerHTML += `<img id="micon" class="mic-iconOn" src="{% static 'images/mic-blue.png' %}" alt="">`;
+            audiobutton.innerHTML += `<img id="micon" onclick="stopVoiceInput()" class="mic-iconOn" src="{% static 'images/mic-blue.png' %}" alt="">`;
             //audiobutton.appendChild(micImageOn);
             
               
@@ -215,6 +234,7 @@
                 let chatLog1 = document.createElement('div');
                 //chatLog.innerHTML += 'You: ' + voiceText + '\n';
                 //chatLog.innerHTML += '<p class="user-message">You: ' + voiceText + '</p>\n';
+                //chatLog1.innerHTML += `<img class="userchatimg" src="{% static 'images/userchatimg.png' %}" alt="">`;
                 chatLog1.innerHTML += `<p class="user-message" sentTime="${currentTime}">${voiceText}</p>`;
                 
                 conversation.appendChild(chatLog1);
@@ -240,6 +260,7 @@
 
                         //chatLog.innerHTML += '<p class="bot-message">Bot: ' + response.response + '</p>\n';
                         chatLog1 = document.createElement('div');
+                        //chatLog1.innerHTML += `<img class="botchatimg" src="{% static 'images/botchatimg.png' %}" alt="">`;
                         chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`;
 
 						conversation.appendChild(chatLog1);
@@ -255,7 +276,12 @@
  
             
             recognition.start();
+            
         }
-</script>
+        function stopVoiceInput() {
+            var recognition = new webkitSpeechRecognition();
+            recognition.stop();
+        }
+</script-->
 </body>
 </html>
