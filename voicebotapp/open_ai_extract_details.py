@@ -7,8 +7,6 @@ import openai
 
 #openai.api_key = "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"
 
-openai.api_key = "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"
-
 
 
 def open_api_call():            #text- to be passed as input after testing
