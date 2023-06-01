@@ -1,11 +1,10 @@
 import openai
 
 #openai.api_key = "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"
-openai.api_key = "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"
+#openai.api_key = "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"
 
-def open_api_call(text):            #text- to be passed as input after testing
-   # text = "Create a jira ticket with high priority for Ecova project. I am not able to do order bookings, it says dates are already booked, selected items not available. Contact your application administrator"
-     # Define the prompt for ticket details extraction
+def open_api_call(text):            
+
     prompt = "Extract ticket details of project name,summary and description from:\n\nText: " + text + "\n\nIn this format: Project:\n\nSummary:\n\nDescription:\n\nProject Name:"
 
     response = openai.Completion.create(
