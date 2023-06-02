@@ -4,7 +4,6 @@ import speech_recognition as sr
 
 import pyttsx3
 import os
-#import azure.cognitiveservices.speech as speechsdk
 from .Jira_ticket import Rest_api_jira_call
 import json
 
@@ -22,8 +21,6 @@ def openapp(request):
 
 
 def chatbot(request):
-    from .speech_recognition1 import recognize_from_microphone
-
     if request.method == 'POST':
         if 'voice_data' in request.POST:
             # Handle voice input
