@@ -12,6 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from subprocess import Popen
 #from jira_api import Rest_api_jira_call
+import logging
 
 
 
@@ -25,6 +26,7 @@ def chatbot(request):
         if 'voice_data' in request.POST:
             # Handle voice input
             voice_data = request.POST['voice_data']
+            logging.debug(f"voice_data: {voice_data}")
             print(voice_data)
             # text_result = recognize_from_microphone()
             # print(text_result)
@@ -48,6 +50,7 @@ def chatbot(request):
         else:
             # Handle text input
             message = request.POST['message']
+            logging.debug(f"message: {message}")
             print("message in view.py", message)
             response = process_response(message)
             data = {'response': response}

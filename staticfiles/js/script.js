@@ -14,8 +14,8 @@
       //chatLog.appendChild(chatLog);
     }, 3500);
 
-    var formData;
-    var csrftoken;
+        var formData;
+        var csrftoken;
 
       document.getElementById("chat-form").addEventListener("submit", function(event) {
           event.preventDefault();
@@ -23,7 +23,7 @@
           csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
           formData.append('csrfmiddlewaretoken', csrftoken);
 
-      });
+
           var conversation = document.getElementById('conversation');
 
           var userMessage = document.getElementById('entry-box').value;
@@ -55,7 +55,7 @@
               beforeSend: function(xhr, settings) {
                 xhr.setRequestHeader("X-CSRFToken", "{{ csrftoken }}");
             },
-            
+
               //chatLog1 = document.createElement('div');
               //chatLog1.innerHTML += '<div class="loading">...</div>';
               //conversation.appendChild(chatLog1);
@@ -94,7 +94,7 @@
               }
           });
       });
-
+    });
 
       var audiobutton = document.getElementById('audiobutton');
       let micImageOff = document.getElementById("micoff");
@@ -185,4 +185,4 @@
       function stopVoiceInput() {
           var recognition = new webkitSpeechRecognition();
           recognition.stop();
-      }
+        }
