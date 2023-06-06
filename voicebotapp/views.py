@@ -1,11 +1,9 @@
 from django.shortcuts import render
 import speech_recognition as sr
-#import pyttsx3
 from .Jira_ticket import Rest_api_jira_call
 from django.http import JsonResponse
 from .openAi_extract_detail import open_api_call
 from .response_handler import process_response
-
 
 previous_response = ""
 
@@ -26,7 +24,6 @@ def chatbot(request):
             else:
                 output = process_response(voice_data)
             
-    
         else:
             # Handle text input
             message = request.POST['message']
@@ -44,14 +41,6 @@ def chatbot(request):
         return JsonResponse(data)
     return render(request, 'chatbot_blue.html')
     
-
-# def voice_output(request):
-
-#     engine = pyttsx3.init()
-
-#     engine.say(request)
-#     engine.runAndWait()
-
 
 def open_ai_and_jira_call(user_input):
     global previous_response
