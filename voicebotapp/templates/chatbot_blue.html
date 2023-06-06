@@ -1,22 +1,67 @@
 <!DOCTYPE html>
 <html>
+    {% load static %}
 <head>
 <title>Ally-The Bot</title>
-    {% load static %}
+<link rel="icon" href="{% static 'images/bot-icon.png' %}" alt="">
+
+
+    
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!--script type="text/javascript" src="{% static 'js/script.js' %}"></script-->
 <!--link rel="stylesheet" type="text/css" href="{% static 'css/style1.css' %}"-->
-<link rel="stylesheet" type="text/css" href="{% static 'css/style4.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/style_blue.css' %}">
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=0.8">
 
 </head>
 
+
 <body>
+<div class="information">
+    <header>
+        <h1 class="Headline"> Ally - The Jira Bot</h1>
+        <!--img class="bot-logo" src="bot-logo.png" alt="Bot Logo"-->
+      </header>
+    
+      <main>
+        <section class="section">
+            <img class="intro-img" src="{% static 'images/intro-img.png' %}" alt="">
+    
+        <section class"section">
+            <p>Create Jira tickets effortlessly using voice commands and messages with Ally. Our bot provides a seamless and convenient way to generate Jira tickets for your projects. Simply issue the command "create Jira ticket" to get started.</p>
+
+            <h2>How it Works:</h2>
+            <ol>
+              <li>Start by saying or typing "create Jira ticket" to initiate the ticket creation process.</li>
+              <li>Ally will respond and guide you through the necessary steps to provide the ticket's summary and description.</li>
+              <li>You can either speak the information or type it as a message.</li>
+              <li>Once you've provided the required details, Ally will create the Jira ticket and assign a ticket number to it.</li>
+              <li>Ally will confirm the successful creation of the ticket and provide you with the ticket number for reference.</li>
+            </ol>
+          
+            <!--p><strong>Note:</strong> If you have multiple Jira projects, please specify the project name or key as part of the command. For example, you can say "create Jira ticket in Project X" to create a ticket in a specific project.</p>
+          
+            <p>Enjoy the convenience of creating Jira tickets using voice commands and messages with Ally. Get started now and streamline your project management process!</p-->   
+        </section>
+      </main>
+    
+      <!--footer>
+        <p>&copy; 2023 Ally-The Jira Bot. All rights reserved.</p>
+      </footer-->
+
+
+    </div>
+
+
 <div class="chatbot-container">
     <div id="header">
-        <h1>Ally
-            <img class="bot-titleimg" src="{% static 'images/botimg1-64.png' %}" alt="">
+        
+        <h1 id="h1">
+
+            <img class="header-icon" src="{% static 'images/bot-img.png' %}" alt="">
+             <span class="ally-text">Ally</span>
         </h1>
             
             
@@ -26,40 +71,45 @@
             <div id="chat-log" class="chat-log">
             
                 <!--p class="user-message"></p-->
-                <p class="bot-text">Hi! 👋 it's great to see you!</p>
+                <!--p class="bot-text">Hi! 👋 it's great to see you!</p-->
             </div>
         </div>
+        <div style="margin-top: 85px;">
+        <button id="audiobutton" onclick="startVoiceInput()">
+            <img id="micoff" class="mic-icon" src="{% static 'images/mic-blue.png' %}" alt="">
+        </button>
+    </div>
 		<form id="chat-form">
 		    <message-container>
                 {% csrf_token %}
-                <input type="text" id="entry-box" name="message" placeholder="Enter your message...">
+                <input type="text" id="entry-box" name="message" placeholder="Enter your message..">
                 <button id="submit-button" type="submit">
-                    <img class="send-icon" src="{% static 'images/send-message1.png' %}" alt="">
+                    <img class="send-icon" src="{% static 'images/send-blue.png' %}" alt="">
                 </button>
             </message-container>
         </form>
-        <button id="audiobutton" onclick="startVoiceInput()">
-            <img id="micoff" class="mic-icon" src="{% static 'images/mic-off.png' %}" alt="">
-        </button>
+        <!--button id="audiobutton" onclick="startVoiceInput()">
+            <img id="micoff" class="mic-icon" src="{% static 'images/mic-off1.png' %}" alt="">
+        </button-->
 
     </div>
 </div>
 
 
- 
 
     <script>
-      // Append a new message to the chat log
-      //function appendMessage(message) {
-      //var chatLog = $('#chat-log');
-      //var messageElement = $('<p>').text(message);
-     // chatLog.append(messageElement);
-    //}
+     function voiceOutput(text) {
+            // Use the SpeechSynthesis API to speak the text
+            const speechSynthesis = window.speechSynthesis;
+            const utterance = new SpeechSynthesisUtterance(text);
+            speechSynthesis.speak(utterance);
+        }
 
 
-
-
-
+    setTimeout(function() {
+        var chatLog = document.getElementById('chat-log');
+        chatLog.innerHTML += `<p class="bot-text">Hi! 👋 it's great to see you!</p>`;
+      }, 3500);
 
         document.getElementById("chat-form").addEventListener("submit", function(event) {
             event.preventDefault();
@@ -67,7 +117,6 @@
             var csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
             formData.append('csrfmiddlewaretoken', csrftoken);
 
- 
             var conversation = document.getElementById('conversation');
 
             var userMessage = document.getElementById('entry-box').value;
@@ -77,12 +126,9 @@
             document.getElementById('entry-box').value = '';
             const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit" });
 
-            //chatLog.innerHTML += 'You: ' + userMessage + '\n';
-            //chatLog.innerHTML += '<p class="user-message">You: ' + userMessage + '</p>\n';
-            //chatLog.innerHTML += '<p class="bot-text">You: ' + userMessage + '</p>\n';
 
             let chatLog1 = document.createElement('div');
-            //chatLog1.classList.add('chat-log', 'user-message');
+
             chatLog1.innerHTML += `<p class="user-message" sentTime="${currentTime}">${userMessage}</p>`;
 			conversation.appendChild(chatLog1);
             chatLog1.scrollTop = chatLog.scrollHeight;
@@ -95,34 +141,18 @@
                 data: formData,
                 processData: false,
                 contentType: false,
-
-                //chatLog1 = document.createElement('div');
-                //chatLog1.innerHTML += '<div class="loading">...</div>';
-                //conversation.appendChild(chatLog1);
-
                 success: function(response) {
 
                     chatLog1 = document.createElement('div');
-                    
-                    //chatLog1.classList.add('chat-log','bot-text');
-                    //chatLog.innerHTML += 'Bot: ' + response.response + '\n';
-                    //chatLog.innerHTML += '<p class="bot-message">Bot: ' + response.response + '</p>\n';
-                    //chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`;
-					
-                    //if (response.results.length === 3) {
-                      //  chatLog.innerHTML += ` 
-                        //<p class="bot-text" sentTime="${currentTime}">${response.results[0]}</p> 
-                        //<p class="bot-text" sentTime="${currentTime}">${response.results[1]}</p> 
-                        //<p class="bot-text" sentTime="${currentTime}">${response.results[2]}</p> `; } 
-                        
-                        
-                        //else if (response.results.length === 1) { 
-                            chatLog1.innerHTML += `<img class="botimg" src="{% static 'images/bot1.png' %}" alt="">`
-                            chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`; 
-                        //}
-                                
-                
-                    
+                    console.log(response.response)
+                    console.log(response.voice_output)
+                            chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`;                         
+
+                        if (response.voice_output) {
+                         // Call a function to handle voice output, passing response.response_text as the parameter
+                         voiceOutput(response.response);
+                    }
+
                     conversation.appendChild(chatLog1);
                     //message.scrollIntoView({behavior: "smooth"});
                     chatLog1.scrollTop = chatLog.scrollHeight;
@@ -145,7 +175,7 @@
             let micImageOff = document.getElementById("micoff");
             let micImageOn = document.createElement("micon");
             micImageOff.remove(micImageOff);
-            audiobutton.innerHTML += `<img id="micon" class="mic-iconOn" src="{% static 'images/mic-on.png' %}" alt="">`;
+            audiobutton.innerHTML += `<img id="micon" onclick="stopVoiceInput()" class="mic-iconOn" src="{% static 'images/mic-blue.png' %}" alt="">`;
             //audiobutton.appendChild(micImageOn);
             
               
@@ -172,12 +202,10 @@
                 //let micImageOn = document.createElement("micon");
                 micImageOn = document.getElementById("micon");
                 micImageOn.remove(micImageOn);
-                audiobutton.innerHTML += `<img id="micoff" class="mic-icon" src="{% static 'images/mic-off.png' %}" alt="">`;
+                audiobutton.innerHTML += `<img id="micoff" class="mic-icon" src="{% static 'images/mic-blue.png' %}" alt="">`;
                 //audiobutton.appendChild(micImageOff);
 
                 let chatLog1 = document.createElement('div');
-                //chatLog.innerHTML += 'You: ' + voiceText + '\n';
-                //chatLog.innerHTML += '<p class="user-message">You: ' + voiceText + '</p>\n';
                 chatLog1.innerHTML += `<p class="user-message" sentTime="${currentTime}">${voiceText}</p>`;
                 
                 conversation.appendChild(chatLog1);
@@ -192,19 +220,13 @@
                         xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
                     },
                     success: function(response) {
-                        //let chatLog1 = document.createElement('div');
-                        //chatLog.innerHTML += 'You: ' + voiceText + '\n';
-                        //chatLog.innerHTML += '<p class="user-message">You: ' + voiceText + '</p>\n';
-                        //chatLog1.innerHTML += `<p class="user-message"sentTime="${currentTime}">${voiceText}</p>`;
-						
-						//conversation.appendChild(chatLog1);
-                        
-                        //chatLog.innerHTML += 'Bot: ' + response.response + '\n';
-
-                        //chatLog.innerHTML += '<p class="bot-message">Bot: ' + response.response + '</p>\n';
                         chatLog1 = document.createElement('div');
+                        //chatLog1.innerHTML += `<img class="botchatimg" src="{% static 'images/botchatimg.png' %}" alt="">`;
                         chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`;
-
+                        if (response.voice_output) {
+                         // Call a function to handle voice output, passing response.response_text as the parameter
+                         voiceOutput(response.response);
+                    }
 						conversation.appendChild(chatLog1);
                         chatLog1.scrollIntoView({behavior: "smooth"});
                         chatLog1.scrollTop = chatLog1.scrollHeight;
@@ -218,6 +240,11 @@
  
             
             recognition.start();
+            
+        }
+        function stopVoiceInput() {
+            var recognition = new webkitSpeechRecognition();
+            recognition.stop();
         }
 </script>
 </body>

@@ -3,10 +3,10 @@
 from .Jira_ticket import Rest_api_jira_call
 
 def process_response(message):
-    if message.lower() in ["hello.","hello","hi.", "hi","good morning.", "what's up", "yo", "how are you", "how are you?", "how are you.", "how r u?"]:
+    if message.lower() in ["hello.","greetings","hai","haiii","hello","hi.", "hi","good morning.", "what's up", "yo", "how are you", "how are you?", "how are you.", "how r u?"]:
         return 'Hi, I am a Jira Voice Bot. How can I help you!'
 
-    elif message.lower() in ["create jira ticket.","raise a ticket","create a jira ticket","i want to create a jira ticket","create a jira ticket.", "create a ticket.", "start a new ticket.", "open a jira ticket", "make a jira ticket", "report bug", "start a ticket", "start new ticket", "a jira ticket", "initiate a jira ticket.","report a bug" "enerate a Jira ticket.", "set up a jira ticket.", "establish a jira ticket.", "craft a jira ticket.", "begin a jira ticket.", "create a new jira task.", "Set up a new Jira ticket.", "I want to create JIRA ticket. "]:
+    elif message.lower() in ["create jira ticket.","create ticket","i have an issue","i have a issue","raise a ticket","create a jira ticket","i want to create a jira ticket","create a jira ticket.", "create a ticket.", "start a new ticket.", "open a jira ticket", "make a jira ticket", "report bug", "start a ticket", "start new ticket", "a jira ticket", "initiate a jira ticket.","report a bug" "enerate a Jira ticket.", "set up a jira ticket.", "establish a jira ticket.", "craft a jira ticket.", "begin a jira ticket.", "create a new jira task.", "Set up a new Jira ticket.", "I want to create JIRA ticket. "]:
         return 'Sure, Do you want to "add details"  or proceed with "default" for now'
 
     elif message.lower() in ["add details", "add detail"]:
@@ -20,7 +20,9 @@ def process_response(message):
 
     elif message.lower() in ["thank you.", "thanks a lot.", "appreciate it."]:
         return "You're welcome! If you need any further assistance, feel free to ask."
-
+    
+    elif message.lower() in ["what can you do for me","what can you do","help"]:
+        return "I am a Jira Voice Bot Ally and I can help you create a Jira ticket, you can try instructions like 'Create a Jira Ticket.' "
     else:
         return "I'm sorry, but I couldn't understand your request. Could you please rephrase or provide more information?"
 

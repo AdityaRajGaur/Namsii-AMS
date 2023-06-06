@@ -1,0 +1,344 @@
+body {
+    display: flex;
+    justify-content: center;
+    zoom: 80%;
+    margin-right: 1000px;
+    
+    
+}
+
+.information {
+    
+    background-image: url(background-img.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    top: 0px;
+    left: 30px;
+    width: 900px;
+    height: 790px;
+    /*position: absolute;*/
+    font-size: 2px;
+
+}
+
+.Headline{
+    top: 108px;
+    left: 133px;
+    width: 500px;
+    height: 104px;
+    /* UI Properties */
+    text-align: left;
+    font: normal normal bold 44px/44px Open Sans;
+    letter-spacing: 0px;
+    color: #3A3A3A;
+    opacity: 1;
+}
+
+.intro-img{
+    align-content: center;
+    height: 300px;
+    width: 300px;
+    display: flex;
+    margin-left: 150px;
+}
+
+.section{
+
+    top: 767px;
+    left: 133px;
+    width: 900px;
+    height: 105px;
+/* UI Properties */
+    text-align: left;
+    font: normal normal normal 20px/26px Open Sans;
+    letter-spacing: 0px;
+    color: #3A3A3A;
+    opacity: 1;
+}
+
+.chatbot-container {
+    width: 750px;
+    margin-right: -970px;
+    
+    background-color: #F9F9F9;
+    border: 1px solid #F9F9F9;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    opacity: 0; /* Set initial opacity to 0 */
+        animation: fadeIn 1s ease-in forwards; /* Apply the fade-in animation */
+        animation-delay: 2s; 
+  }
+    
+@keyframes fadeIn {
+    0% { opacity: 0; } /* Start with opacity 0 */
+    100% { opacity: 1; } /* End with opacity 1 */
+}
+#chatbot {
+    background-color: #F9F9F9;
+    border: 1px solid #F9F9F9;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+  }
+  
+  #header {
+    background-color: #435AC2 ;
+    color: #ffffff;
+    padding: 1px;
+    font-size: 1em;
+    font-weight: bold;
+    text-align: left;
+    
+  }
+
+  .ally-text {
+    margin-left: 175px; /* Adjust the value as per your desired spacing */
+}
+
+  .header-icon {
+    top: 16px;
+    left: 1064px;
+    width: 67px;
+    height: 67px;
+    /* UI Properties */
+    opacity: 1;
+    margin-left: 10px;
+  }
+
+  #h1 {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font: normal normal bold 38px/44px Open Sans;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+  }
+  
+  message-container {
+    background: #DAE3F7;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 90px
+  }
+  
+  
+  #conversation {
+    height: 500px;
+    overflow-y: scroll;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @keyframes message-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .chat-log {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    font-size: 20px;
+    line-height: 20px;
+    border-radius: 20px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    max-width: 100%;
+    padding: 0 15px;
+  }
+
+  
+
+  .user-message {
+    justify-content: flex-end;
+    background-color: #F1F5FF;
+    color: #03050e    ;
+    font: normal normal normal 22px/24px Open Sans;
+    padding: 15px;
+    border-radius: 30px;
+    text-align: justify;
+    float: right;
+    box-shadow: 0 12px 5px rgba(0, 0, 0, 0.1);
+    /*width: 210px;*/
+  }
+
+
+.bot-text {
+    background-color: #FFFFFF;
+    color: #03050e;
+    font: normal normal normal 22px/24px Open Sans;
+    padding: 15px;
+    border-radius: 30px;
+    text-align: left;
+    float: left;
+    box-shadow: 0 12px 5px rgba(0, 0, 0, 0.1);
+    /*width: 210px;*/
+    /*position: absolute;*/
+    /*margin-left: 60px;*/
+  }
+
+  .user-message p {
+    display: block;
+}
+
+.bot-text p {
+    display: block;
+}
+  
+  #chat-form {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #eef1f5;
+    margin-right: 0px;
+  }
+  
+  #entry-box {
+    flex: 1;
+    height: 60px;
+    border: 1px solid #eef1f5;
+    border-radius: 50px;
+    padding: 0 10px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+    background: #ffffff;
+    color: #333333;
+    border: none;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+
+  .botchatimg {
+    margin-right: 10px;
+    height: 60px;
+    width: 60px;
+    cursor: pointer;
+  }
+
+  .userchatimg {
+    margin-right: 0px;
+    height: 60px;
+    width: 60px;
+    cursor: pointer;
+  }
+
+
+
+  .send-icon {
+    margin-right: 10px;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+  }
+
+  .mic-icon {
+    margin-right: 270px;
+    margin-top: -12px;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+  }
+
+  .mic-iconOn {
+    margin-right: 265px;
+    margin-top: -12px;
+    width: 60px;
+    height: 60px;
+    animation: pulse 1s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1.5);
+    }
+    50% {
+      transform: scale(1.7);
+    }
+    100% {
+      transform: scale(1.5);
+    }
+  }
+
+  .bot-titleimg{
+    margin-right: 10px;
+    cursor: pointer;
+    margin-bottom: -20px;
+  }
+  
+  #entry-box:focus {
+    border-color: #333333;
+    outline: none;
+  }
+  
+  #submit-button {
+    background-color: transparent;
+    border: none;
+  }
+
+  #audiobutton {
+    background-color: transparent;
+    border: none;
+    margin-top: -65px;
+    float: right;
+  }
+
+  p[sentTime]:hover::after {    
+    content: attr(sentTime);
+    position: absolute;
+    /*top: 180px;*/
+    
+    
+    font-size: 14px;
+    color: gray;
+  }
+
+  .chatbot p[sentTime]:hover::after {  
+    left: 15px;
+  }
+
+  .user-message p[sentTime]:hover::after {  
+    right: 15px;
+  }
+
+  .loading {
+    font-weight: bold;
+    display:inline-block;
+    font-family: monospace;
+    font-size: 30px;
+    clip-path: inset(0 3ch 0 0);
+    animation: l 1s steps(4) infinite;
+  }
+  
+  @keyframes l {
+    to {
+      clip-path: inset(0 -1ch 0 0)
+    }
+  }
+  
+
+  /* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }

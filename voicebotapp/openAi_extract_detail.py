@@ -1,7 +1,7 @@
 import openai
 
-#openai.api_key = "insert_key_here"
-#openai.api_key = ""
+openai.api_key = "insert api key here"
+
 
 def open_api_call(text):            
 
@@ -46,18 +46,6 @@ def open_api_call(text):
         elif line.startswith('Description:'):
              description = line.replace('Description: \n', '').strip()
         
-        # Iterate through the lines
-    # for i in range(len(lines)):
-    #     if lines[i].startswith('Description:'):
-    #         # Capture the subsequent lines until the next keyword or an empty line
-    #         j = i + 1
-    #         while j < len(lines) and not lines[j].startswith('Priority:') and lines[j].strip() != '':
-    #             description += lines[j] + '\n'
-    #             j += 1
-    #         break
-
-    # # Remove leading/trailing whitespace from the description
-    #     description = description.strip()
 
     print('Project:', project)
     print('Summary:', summary_extract)
@@ -65,5 +53,6 @@ def open_api_call(text):
     print('Description:', description)
 
     return project,summary_extract,description
+
 
 
