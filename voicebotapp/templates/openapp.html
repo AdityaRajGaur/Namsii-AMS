@@ -1,0 +1,18 @@
+<button id="openAppButton">Open App</button>
+<div id="appContainer"></div>
+
+<script>
+document.getElementById("openAppButton").addEventListener("click", function() {
+    var appContainer = document.getElementById("appContainer");
+  
+    // Load the HTML file dynamically
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "chatbot.html", true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        appContainer.innerHTML = xhr.responseText;
+      }
+    };
+    xhr.send();
+  });
+</script>
