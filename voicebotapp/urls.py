@@ -4,9 +4,9 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.openapp, name='openapp'),
+    path('', views.index, name='index'),
     path('chatbot', views.chatbot, name='chatbot'),
-    path('chatbot', views.voice_output, name='voice_output')
+    #path('chatbot', views.voice_output, name='voice_output')
     
     
 

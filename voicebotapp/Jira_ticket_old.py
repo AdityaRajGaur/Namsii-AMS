@@ -3,17 +3,18 @@ import json
 import os
 
 
-def Rest_api_jira_call(project,summary,description):
+def Rest_api_jira_call(summary,description):
 # Jira API endpoint and authentication details
     url = "https://jira.nagarro.com/rest/api/2/issue/"
-    print("inside the function fro rest api call")
-    print(project,summary,description)
+    import json
+    print("inside the function REST API")
+    print(summary,description)
     # Get the current working directory
     cwd = os.getcwd()
     print(cwd)
 
 # Construct the file path relative to the current working directory
-    file_path = os.path.join(cwd, '.config.json')
+    file_path = os.path.join(cwd, 'config.json')
     print(file_path)
 
     with open(file_path,'r') as config_file:
@@ -61,8 +62,11 @@ def Rest_api_jira_call(project,summary,description):
         issue_key = response.json()["key"]
         print("Issue Number:", issue_key)
         link= "https://jira.nagarro.com/browse/"+ issue_key
+        result1="Ticket Created Successfully"
+        #data = {'result1': result1, 'result2': issue_key,'result3': link}
         return issue_key
     else:
         print("Failed to create issue. Status code:", response.status_code)
         print("Error message:", response.text)
-        return response.text
+
+#Rest_api_jira_call(summary1, description1)
