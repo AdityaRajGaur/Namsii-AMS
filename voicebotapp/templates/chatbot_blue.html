@@ -1,115 +1,157 @@
 <!DOCTYPE html>
 <html>
-    {% load static %}
-<head>
-<title>Ally-The Bot</title>
-<link rel="icon" href="{% static 'images/bot-icon.png' %}" alt="">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Ally-The Bot</title>
+    <link rel="icon" href="../static/images/bot-icon.png" alt="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!--script type="text/javascript" src="{% static 'js/script.js' %}"></script-->
+    <!--link rel="stylesheet" type="text/css" href="{% static 'css/style1.css' %}"-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../static/css/style_blue.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+    <!-- Optional theme -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
+      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+      crossorigin="anonymous"
+    />
+    <!-- Latest compiled and minified JavaScript -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+      integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+      crossorigin="anonymous"
+    ></script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.8" />
+  </head>
 
-    
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!--script type="text/javascript" src="{% static 'js/script.js' %}"></script-->
-<!--link rel="stylesheet" type="text/css" href="{% static 'css/style1.css' %}"-->
-<link rel="stylesheet" type="text/css" href="{% static 'css/style_blue.css' %}">
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=0.8">
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="information col-sm-12 bg-secondary">
+          <header class="row">
+            <h1 class="Headline col-sm-12">Ally - Nagarro's Voice Bot</h1>
+            <!--img class="bot-logo" src="bot-logo.png" alt="Bot Logo"-->
+          </header>
 
-</head>
+          <main class="main">
+            <section class="section">
+              <div class="row row2" style="margin: auto">
+                <div class="col-sm-8 img_cont">
+                  <div class="image-content">
+                    <img
+                      class="intro-img img-responsive sizing"
+                      src="../static/images/intro-img.png"
+                      alt=""
+                      width="300px"
+                    />
+                    <div class="sizing mx-auto">
+                      <button id="audiobutton" onclick="startVoiceInput()">
+                        <img
+                          id="micoff"
+                          class="mic-icon"
+                          src="../static/images/mic-blue.png"
+                          alt=""
+                        />
+                      </button>
+                      <img id="pulseImage" src="../static/images/bars.gif" alt=""/>
+                    </div>
+                  </div>
 
+                  <div>
+                    <div class="info">
+                      <div class="info-c">
+                        <h3>Initialization</h3>
+                        <p>Tap on mic and say "Create a ticket"</p>
+                      </div>
+                      <div class="info-c">
+                        <h3>Explanation</h3>
+                        <p>Describe your problem by providing audio inputs</p>
+                      </div>
+                      <div class="info-c">
+                        <h3>Realization</h3>
+                        <p>
+                          Ticket will get generated and unique ID will be shared
+                          for future referneces
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-<body>
-<div class="information">
-    <header>
-        <h1 class="Headline"> Ally - Nagarro's Jira Voice Bot</h1>
-        <!--img class="bot-logo" src="bot-logo.png" alt="Bot Logo"-->
-      </header>
-    
-      <main>
-        <section class="section">
-            <img class="intro-img" src="{% static 'images/intro-img.png' %}" alt="">
-    
-        <section class"section">
-            <p>Create Jira tickets effortlessly using voice commands and messages with Ally. Our bot provides a seamless and convenient way to generate Jira tickets for your projects. Simply issue the command "create Jira ticket" to get started.</p>
-
-            <h2>How it Works:</h2>
-            <ol>
-              <li>Start by saying or typing "Create Jira ticket" to initiate the ticket creation process.</li>
-              <li>Ally will guide you through the necessary steps to provide the ticket's summary, description and project name.</li>
-              <li>Speak or type the information as a message.</li>
-              <li>After gathering the required details, Ally will create the Jira ticket.</li>
-              <li>Ally will confirm the successful creation of the ticket and provide you with the ticket number, jira-link for reference.</li>
-            </ol>
-          
-            <!--p><strong>Note:</strong> If you have multiple Jira projects, please specify the project name or key as part of the command. For example, you can say "create Jira ticket in Project X" to create a ticket in a specific project.</p>
-          
-            <p>Enjoy the convenience of creating Jira tickets using voice commands and messages with Ally. Get started now and streamline your project management process!</p-->   
-        </section>
-      </main>
-    
-      <!--footer>
-        <p>&copy; 2023 Ally-The Jira Bot. All rights reserved.</p>
-      </footer-->
-
-
-    </div>
-
-
-<div class="chatbot-container">
-    <div id="header">
-        
-        <h1 id="h1">
-
-            <img class="header-icon" src="{% static 'images/bot-img.png' %}" alt="">
-             <span class="ally-text">Ally</span>
-        </h1>
-            
-            
-    </div>
-    <div id="chatbot">
-        <div id="conversation">
-            <div id="chat-log" class="chat-log">
-            
-                <!--p class="user-message"></p-->
-                <!--p class="bot-text">Hi! 👋 it's great to see you!</p-->
-            </div>
-        </div>
-        <div style="margin-top: 85px;">
-        <button id="audiobutton" onclick="startVoiceInput()">
-            <img id="micoff" class="mic-icon" src="{% static 'images/mic-blue.png' %}" alt="">
-        </button>
-    </div>
-		<form id="chat-form">
+                <div class="chatbot-container col-sm-4">
+                  <div id="header">
+                      <!-- <h1 id="h1">
+                        <img
+                          class="header-icon rounded mx-auto d-block"
+                          src="../static/images/bot-img.png"
+                          alt=""
+                        />
+                      </h1> -->
+                  </div>
+                  <div id="chatbot" class="">
+                    <div id="conversation">
+                      <div id="chat-log" class="chat-log">
+                        <!--p class="user-message"></p-->
+                        <!--p class="bot-text">Hi! 👋 it's great to see you!</p-->
+                      </div>
+                    </div>
+                    <!-- <form id="chat-form">
 		    <message-container>
-                {% csrf_token %}
                 <input type="text" id="entry-box" name="message" placeholder="Enter your message..">
                 <button id="submit-button" type="submit">
-                    <img class="send-icon" src="{% static 'images/send-blue.png' %}" alt="">
+                    <img class="send-icon" src="../static/images/send-blue.png" alt="">
                 </button>
             </message-container>
-        </form>
-        <!--button id="audiobutton" onclick="startVoiceInput()">
+        </form> -->
+                    <!--button id="audiobutton" onclick="startVoiceInput()">
             <img id="micoff" class="mic-icon" src="{% static 'images/mic-off1.png' %}" alt="">
         </button-->
-
+                  </div>
+                </div>
+              </div>
+            </section>
+          </main>
+        </div>
+      </div>
     </div>
-</div>
 
-
-
-    <script>
-     function voiceOutput(text) {
-            // Use the SpeechSynthesis API to speak the text
-            const speechSynthesis = window.speechSynthesis;
-            const utterance = new SpeechSynthesisUtterance(text);
-            speechSynthesis.speak(utterance);
-        }
+    <!--script>
+      // Append a new message to the chat log
+      //function appendMessage(message) {
+      //var chatLog = $('#chat-log');
+      //var messageElement = $('<p>').text(message);
+     // chatLog.append(messageElement);
+    //}
 
 
     setTimeout(function() {
         var chatLog = document.getElementById('chat-log');
+        //chatLog.innerHTML += `<img class="botchatimg" src="{% static 'images/botchatimg.png' %}" alt="">`;
         chatLog.innerHTML += `<p class="bot-text">Hi! 👋 it's great to see you!</p>`;
+        //chatLog.appendChild(chatLog);
       }, 3500);
+
+
 
         document.getElementById("chat-form").addEventListener("submit", function(event) {
             event.preventDefault();
@@ -117,6 +159,7 @@
             var csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
             formData.append('csrfmiddlewaretoken', csrftoken);
 
+ 
             var conversation = document.getElementById('conversation');
 
             var userMessage = document.getElementById('entry-box').value;
@@ -126,9 +169,13 @@
             document.getElementById('entry-box').value = '';
             const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit" });
 
+            //chatLog.innerHTML += 'You: ' + userMessage + '\n';
+            //chatLog.innerHTML += '<p class="user-message">You: ' + userMessage + '</p>\n';
+            //chatLog.innerHTML += '<p class="bot-text">You: ' + userMessage + '</p>\n';
 
             let chatLog1 = document.createElement('div');
-
+            //chatLog1.classList.add('chat-log', 'user-message');
+            //chatLog1.innerHTML += `<img class="userchatimg" src="{% static 'images/userchatimg.png' %}" alt="">`;
             chatLog1.innerHTML += `<p class="user-message" sentTime="${currentTime}">${userMessage}</p>`;
 			conversation.appendChild(chatLog1);
             chatLog1.scrollTop = chatLog.scrollHeight;
@@ -141,18 +188,34 @@
                 data: formData,
                 processData: false,
                 contentType: false,
+
+                //chatLog1 = document.createElement('div');
+                //chatLog1.innerHTML += '<div class="loading">...</div>';
+                //conversation.appendChild(chatLog1);
+
                 success: function(response) {
 
                     chatLog1 = document.createElement('div');
-                    console.log(response.response)
-                    console.log(response.voice_output)
-                            chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`;                         
-
-                        if (response.voice_output) {
-                         // Call a function to handle voice output, passing response.response_text as the parameter
-                         voiceOutput(response.response);
-                    }
-
+                    
+                    //chatLog1.classList.add('chat-log','bot-text');
+                    //chatLog.innerHTML += 'Bot: ' + response.response + '\n';
+                    //chatLog.innerHTML += '<p class="bot-message">Bot: ' + response.response + '</p>\n';
+                    //chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`;
+					
+                    //if (response.results.length === 3) {
+                      //  chatLog.innerHTML += ` 
+                        //<p class="bot-text" sentTime="${currentTime}">${response.results[0]}</p> 
+                        //<p class="bot-text" sentTime="${currentTime}">${response.results[1]}</p> 
+                        //<p class="bot-text" sentTime="${currentTime}">${response.results[2]}</p> `; } 
+                        
+                        
+                        //else if (response.results.length === 1) { 
+                            //chatLog1.innerHTML += `<img class="botchatimg" src="{% static 'images/botchatimg.png' %}" alt="">`;
+                            chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`; 
+                        //}
+                                
+                
+                    
                     conversation.appendChild(chatLog1);
                     //message.scrollIntoView({behavior: "smooth"});
                     chatLog1.scrollTop = chatLog.scrollHeight;
@@ -206,6 +269,9 @@
                 //audiobutton.appendChild(micImageOff);
 
                 let chatLog1 = document.createElement('div');
+                //chatLog.innerHTML += 'You: ' + voiceText + '\n';
+                //chatLog.innerHTML += '<p class="user-message">You: ' + voiceText + '</p>\n';
+                //chatLog1.innerHTML += `<img class="userchatimg" src="{% static 'images/userchatimg.png' %}" alt="">`;
                 chatLog1.innerHTML += `<p class="user-message" sentTime="${currentTime}">${voiceText}</p>`;
                 
                 conversation.appendChild(chatLog1);
@@ -220,13 +286,20 @@
                         xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
                     },
                     success: function(response) {
+                        //let chatLog1 = document.createElement('div');
+                        //chatLog.innerHTML += 'You: ' + voiceText + '\n';
+                        //chatLog.innerHTML += '<p class="user-message">You: ' + voiceText + '</p>\n';
+                        //chatLog1.innerHTML += `<p class="user-message"sentTime="${currentTime}">${voiceText}</p>`;
+						
+						//conversation.appendChild(chatLog1);
+                        
+                        //chatLog.innerHTML += 'Bot: ' + response.response + '\n';
+
+                        //chatLog.innerHTML += '<p class="bot-message">Bot: ' + response.response + '</p>\n';
                         chatLog1 = document.createElement('div');
                         //chatLog1.innerHTML += `<img class="botchatimg" src="{% static 'images/botchatimg.png' %}" alt="">`;
                         chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`;
-                        if (response.voice_output) {
-                         // Call a function to handle voice output, passing response.response_text as the parameter
-                         voiceOutput(response.response);
-                    }
+
 						conversation.appendChild(chatLog1);
                         chatLog1.scrollIntoView({behavior: "smooth"});
                         chatLog1.scrollTop = chatLog1.scrollHeight;
@@ -246,6 +319,329 @@
             var recognition = new webkitSpeechRecognition();
             recognition.stop();
         }
-</script>
-</body>
+</script-->
+
+    <!-- <script>
+      console.log("Inside the Script");
+      function voiceOutput(text) {
+        // Use the SpeechSynthesis API to speak the text
+        const speechSynthesis = window.speechSynthesis;
+        const utterance = new SpeechSynthesisUtterance(text);
+        speechSynthesis.speak(utterance);
+      }
+
+      setTimeout(function () {
+        var chatLog = document.getElementById("chat-log");
+        //chatLog.innerHTML += `<img class="botchatimg" src="{% static 'images/botchatimg.png' %}" alt="">`;
+        chatLog.innerHTML += `<p class="bot-text">Hi! 👋 it's great to see you!</p>`;
+        //chatLog.appendChild(chatLog);
+      }, 3500);
+
+      document
+        .getElementById("chat-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          var formData = new FormData(event.target);
+          var csrftoken = document.querySelector(
+            "[name=csrfmiddlewaretoken]"
+          ).value;
+          formData.append("csrfmiddlewaretoken", csrftoken);
+
+          var conversation = document.getElementById("conversation");
+
+          var userMessage = document.getElementById("entry-box").value;
+          var chatLog = document.getElementById("chat-log");
+
+          // Clear input field
+          document.getElementById("entry-box").value = "";
+          const currentTime = new Date().toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+
+          let chatLog1 = document.createElement("div");
+
+          chatLog1.innerHTML += `<p class="user-message" sentTime="${currentTime}">${userMessage}</p>`;
+          conversation.appendChild(chatLog1);
+          chatLog1.scrollTop = chatLog.scrollHeight;
+
+          console.log("Ouside the Ajax");
+          $.ajax({
+            type: "POST",
+            url: "chatbot",
+            data: formData,
+            processData: false,
+            contentType: false,
+
+            success: function (response) {
+              console.log("Ouside the Ajax");
+              chatLog1 = document.createElement("div");
+              console.log(response.response);
+              console.log(response.voice_output);
+              chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`;
+
+              if (response.voice_output) {
+                // Call a function to handle voice output, passing response.response_text as the parameter
+                voiceOutput(response.response);
+              }
+
+              //old code below
+              //     chatLog.innerHTML += '<p class="bot-message">Bot: ' + response.response + '</p>\n';
+
+              //     if (response.voice_output) {
+              // // Call a function to handle voice output, passing response.response_text as the parameter
+              //          voiceOutput(response.response);
+              //     }
+
+              //old code above
+
+              conversation.appendChild(chatLog1);
+              //message.scrollIntoView({behavior: "smooth"});
+              chatLog1.scrollTop = chatLog.scrollHeight;
+              chatLog1.scrollIntoView({ behavior: "smooth" });
+            },
+            error: function () {
+              console.log("Error occurred.");
+            },
+          });
+        });
+
+      var audiobutton = document.getElementById("audiobutton");
+      let micImageOff = document.getElementById("micoff");
+      let micImageOn = document.createElement("micon");
+
+      function toggleMic() {
+        var audiobutton = document.getElementById("audiobutton");
+        let micImageOff = document.getElementById("micoff");
+        let micImageOn = document.createElement("micon");
+        micImageOff.remove(micImageOff);
+        audiobutton.innerHTML += `<img id="micon" onclick="stopVoiceInput()" class="mic-iconOn" src="{% static 'images/mic-blue.png' %}" alt="">`;
+        //audiobutton.appendChild(micImageOn);
+      }
+
+      function startVoiceInput() {
+        var recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+
+        toggleMic();
+
+        var conversation = document.getElementById("conversation");
+        const currentTime = new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+        recognition.onresult = function (event) {
+          var result = event.results[event.results.length - 1];
+          var voiceText = result[0].transcript;
+
+          audiobutton = document.getElementById("audiobutton");
+          micImageOff = document.getElementById("micoff");
+          //let micImageOn = document.createElement("micon");
+          micImageOn = document.getElementById("micon");
+          micImageOn.remove(micImageOn);
+          audiobutton.innerHTML += `<img id="micoff" class="mic-icon" src="{% static 'images/mic-blue.png' %}" alt="">`;
+          //audiobutton.appendChild(micImageOff);
+
+          let chatLog1 = document.createElement("div");
+          chatLog1.innerHTML += `<p class="user-message" sentTime="${currentTime}">${voiceText}</p>`;
+
+          conversation.appendChild(chatLog1);
+          //chatLog1.scrollTop = chatLog.scrollHeight;
+
+          $.ajax({
+            type: "POST",
+            url: "chatbot",
+            data: { voice_data: voiceText },
+            beforeSend: function (xhr, settings) {
+              xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+            },
+            success: function (response) {
+              chatLog1 = document.createElement("div");
+              //chatLog1.innerHTML += `<img class="botchatimg" src="{% static 'images/botchatimg.png' %}" alt="">`;
+              chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`;
+              if (response.voice_output) {
+                // Call a function to handle voice output, passing response.response_text as the parameter
+                voiceOutput(response.response);
+              }
+              conversation.appendChild(chatLog1);
+              chatLog1.scrollIntoView({ behavior: "smooth" });
+              chatLog1.scrollTop = chatLog1.scrollHeight;
+            },
+            error: function () {
+              console.log("Error during voice input.");
+            },
+          });
+        };
+
+        recognition.start();
+      }
+      function stopVoiceInput() {
+        var recognition = new webkitSpeechRecognition();
+        recognition.stop();
+      }
+    </script> -->
+    <script>
+        function voiceOutput(text) {
+            // Use the SpeechSynthesis API to speak the text
+            const speechSynthesis = window.speechSynthesis;
+            const utterance = new SpeechSynthesisUtterance(text);
+            speechSynthesis.speak(utterance);
+        }
+
+
+        setTimeout(function () {
+            var chatLog = document.getElementById('chat-log');
+            chatLog.innerHTML += `<p class="bot-text">Hi! 👋 it's great to see you!</p>`;
+        }, 3500);
+
+        document.getElementById("chat-form").addEventListener("submit", function (event) {
+            event.preventDefault();
+            var formData = new FormData(event.target);
+            var csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+            formData.append('csrfmiddlewaretoken', csrftoken);
+
+            var conversation = document.getElementById('conversation');
+
+            var userMessage = document.getElementById('entry-box').value;
+            var chatLog = document.getElementById('chat-log');
+
+            // Clear input field
+            document.getElementById('entry-box').value = '';
+            const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit" });
+
+
+            let chatLog1 = document.createElement('div');
+
+            chatLog1.innerHTML += `<p class="user-message" sentTime="${currentTime}">${userMessage}</p>`;
+            conversation.appendChild(chatLog1);
+            chatLog1.scrollTop = chatLog.scrollHeight;
+
+
+
+            $.ajax({
+                type: 'POST',
+                url: 'chatbot',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+
+                    chatLog1 = document.createElement('div');
+                    console.log(response.response)
+                    console.log(response.voice_output)
+                    chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`;
+
+                    if (response.voice_output) {
+                        // Call a function to handle voice output, passing response.response_text as the parameter
+                        voiceOutput(response.response);
+                    }
+
+                    conversation.appendChild(chatLog1);
+                    //message.scrollIntoView({behavior: "smooth"});
+                    chatLog1.scrollTop = chatLog.scrollHeight;
+                    chatLog1.scrollIntoView({ behavior: "smooth" });
+
+                },
+                error: function () {
+                    console.log('Error occurred.');
+                }
+            });
+        });
+
+
+        var audiobutton = document.getElementById('audiobutton');
+        let micImageOff = document.getElementById("micoff");
+        let micImageOn = document.createElement("micon");
+        let pulseImage = document.getElementById("pulseImage");
+
+
+        function toggleMic() {
+            var audiobutton = document.getElementById('audiobutton');
+            let micImageOff = document.getElementById("micoff");
+            let micImageOn = document.createElement("micon");
+            let pulseImage = document.getElementById("pulseImage")
+            
+            // micImageOff.remove(micImageOff);
+            // audiobutton.innerHTML += `<img id="micon" onclick="stopVoiceInput()" class="mic-iconOn" src="static/images/mic-blue.png" alt="">`;
+            //audiobutton.appendChild(micImageOn);
+            if(micImageOff.classList.contains("mic-iconOn") ){
+                     micImageOff.classList.remove("mic-iconOn");
+                     pulseImage.style.display = "none";
+            }else{
+                micImageOff.classList.add("mic-iconOn");
+                pulseImage.style.display = "block";
+            }
+
+
+
+        }
+
+        function startVoiceInput() {
+            var recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+
+            toggleMic();
+
+            var conversation = document.getElementById('conversation');
+            const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit" });
+
+            recognition.onresult = function (event) {
+                var result = event.results[event.results.length - 1];
+                var voiceText = result[0].transcript;
+
+
+                // audiobutton = document.getElementById('audiobutton');
+                // micImageOff = document.getElementById("micoff");
+                //let micImageOn = document.createElement("micon");
+                // micImageOn = document.getElementById("micon");
+                // micImageOn.remove(micImageOn);
+                // audiobutton.innerHTML += `<img id="micoff" class="mic-icon" src="static/images/mic-blue.png" alt="">`;
+                //audiobutton.appendChild(micImageOff);
+                 toggleMic();
+                let chatLog1 = document.createElement('div');
+                chatLog1.innerHTML += `<p class="user-message" sentTime="${currentTime}">${voiceText}</p>`;
+
+                conversation.appendChild(chatLog1);
+                //chatLog1.scrollTop = chatLog.scrollHeight;
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'chatbot',
+                    data: { 'voice_data': voiceText },
+                    beforeSend: function (xhr, settings) {
+                        xhr.setRequestHeader("X-CSRFToken", "1wzrVXuFJln6gwJGiA8eWCcR6w9SWcyl8oUFtaRD65Ee8KL4Ji9RAR3mpXDJeYyr");
+                    },
+                    success: function (response) {
+                        chatLog1 = document.createElement('div');
+                        //chatLog1.innerHTML += `<img class="botchatimg" src="static/images/botchatimg.png" alt="">`;
+                        chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`;
+                        if (response.voice_output) {
+                            // Call a function to handle voice output, passing response.response_text as the parameter
+                            voiceOutput(response.response);
+                        }
+                        conversation.appendChild(chatLog1);
+                        chatLog1.scrollIntoView({ behavior: "smooth" });
+                        chatLog1.scrollTop = chatLog1.scrollHeight;
+                    },
+                    error: function () {
+                        console.log('Error during voice input.');
+                    }
+                });
+            };
+
+
+
+            recognition.start();
+
+        }
+        function stopVoiceInput() {
+            var recognition = new webkitSpeechRecognition();
+            recognition.stop();
+        }
+    </script>
+  </body>
 </html>
