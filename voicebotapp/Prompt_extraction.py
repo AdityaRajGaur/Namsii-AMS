@@ -9,7 +9,7 @@ import openai
 openai.api_type = "azure"
 openai.api_base = "https://testazopenai.openai.azure.com/"
 openai.api_version = "2023-03-15-preview"
-openai.api_key = "63e13989a8ba49b39a1c6bd2876e380b"
+openai.api_key = ""
 
 #old system msg   As a support assistant,check if user intents to create a ticket for his technical problem if any or not based on input. If 'yes' then return only 'True' else return 'False', Just respond with True and False"
 #function to check user intent

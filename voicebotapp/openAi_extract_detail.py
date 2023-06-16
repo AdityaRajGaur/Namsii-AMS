@@ -1,7 +1,7 @@
 import openai
 
 
-openai.api_key = "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"
+openai.api_key = ""
 
 
 def open_api_call(text):

@@ -5,7 +5,7 @@ import os
 import requests
 import json
 
-openai.api_key = "9a62b3f0382a4fb496ef0e996630bbb9"
+openai.api_key = ""
 openai.api_base = "https://voicebotwest.openai.azure.com/"
 openai.api_type = 'azure'
 deployment_name='my-curie-model'
