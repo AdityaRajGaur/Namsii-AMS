@@ -8,7 +8,6 @@ from .check_input_for_details import check_input
 from .Intent_extraction import intent_extraction
 from .Random_query_handler import random_query_handler
 from .code_testing import check_if_all_details_are_present
-from .get_missing_details import check_if_all_details_are_presents
 
 
 previous_response = ""
@@ -49,16 +48,17 @@ def flow_control(voice_data):
     global priority
 
     if previous_response in ['Please provide the details for your ticket']:
-        if check_if_all_details_are_present(voice_data) == 'True':
-            output = check_det(voice_data)
-            print("output from check_det",output)
-        else:
-            output = 'Could you please elaborate the problem you are facing.A brief description is missing!'
-        return output
-
-
+        
         output = check_det(voice_data)
         return output
+
+
+        # if check_if_all_details_are_present(voice_data) == 'True':
+        #     output = check_det(voice_data)
+        #     print("output from check_det",output)
+        # else:
+        #     output = 'Could you please elaborate the problem you are facing.A brief description is missing!'
+        # return output
         # val =check_if_all_details_are_present(voice_data)
         # print("val",val)
         # print('val type:',type(val))
@@ -81,7 +81,7 @@ def flow_control(voice_data):
         # return output
 
 
-    elif previous_response.startswith("Please provide the required details for:") or previous_response in ['Could you please elaborate the problem you are facing.A brief description is missing!'] or previous_response.startswith('Please provide details of'):
+    elif previous_response.startswith("Please provide the required details for:") or previous_response in ['Could you please elaborate the problem you are facing.A brief description is missing!']:
         #get project,sum,des from user input//incomplete code
         #proj,sum,des
         text = voice_data+application+description+summary+priority
@@ -92,19 +92,18 @@ def flow_control(voice_data):
         return output
     else:
         intent= intent_extraction(voice_data)            #Get intent,true or false
-        if intent == 'True':                            #user wants to create a message
+        if intent == 'True':   
+            print("inside Intent"+intent)                         #user wants to create a message
             check =check_if_all_details_are_present(voice_data)
-            if check == 'True':         #user has given all details along with +ive intent
+            if check == 'True':
+                print("inside check"+check)         #user has given all details along with +ive intent
                 output = check_det(voice_data)
                 return output
             else:
-                val,output = check_if_all_details_are_presents(voice_data)
-                if val == 0:
-                    return output
-                else:
-                    return check_det(voice_data)
-                #return check_det(voice_data)
+                return check_det(voice_data)
+
                 #return 'Please provide the details for your ticket'
+                
         #output = process_response(voice_data)
         else:                                   #user does not want to create a msg and do small talk
             #send a normal reply to user from openAi
@@ -116,9 +115,7 @@ def confirm_user_input():
     return 'confirm'
 
 def check_det(voice_data):
-  
-    # missing_values= check_if_all_details_are_presents(voice_data)
-    
+
     application,description,summary,priority=open_api_call(voice_data)
     #proj,sum,des = open_api_call(voice_data)   #if any detail is given by user input already then extract it and if some required field is missing then request it
     #check if all are given in input,or few are given

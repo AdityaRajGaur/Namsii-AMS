@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
+  {% load static %}
   <head>
+    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Ally-The Bot</title>
-    <link rel="icon" href="../static/images/bot-icon.png" alt="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NAMSii</title>
+    <link rel="icon" href="{% static 'images/bot-icon-green.png' %}" alt="">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
@@ -15,11 +17,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!--script type="text/javascript" src="{% static 'js/script.js' %}"></script-->
     <!--link rel="stylesheet" type="text/css" href="{% static 'css/style1.css' %}"-->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../static/css/style_blue.css"
-    />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style_blue.css' %}">
+
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
@@ -46,94 +45,196 @@
 
   <body>
     <div class="container">
-      <div class="row">
+
+      <div class="row g-2">
+
         <div class="information col-sm-12 bg-secondary">
+
           <header class="row">
-            <h1 class="Headline col-sm-12">Ally - Nagarro's Voice Bot</h1>
+
+            <h1 class="Headline col-sm-4">NAMSii</h1>
+
+            <h3 class="Headline2 col-sm-4">-Nagarro Assistant</h3>
+
             <!--img class="bot-logo" src="bot-logo.png" alt="Bot Logo"-->
+
           </header>
 
+
+
+
           <main class="main">
+
             <section class="section">
+
               <div class="row row2" style="margin: auto">
+
                 <div class="col-sm-8 img_cont">
+
                   <div class="image-content">
+
                     <img
+
                       class="intro-img img-responsive sizing"
-                      src="../static/images/intro-img.png"
+
+                      src="{% static 'images/intro-img_green.png' %}"
+
                       alt=""
+
                       width="300px"
+
                     />
+
                     <div class="sizing mx-auto">
+
                       <button id="audiobutton" onclick="startVoiceInput()">
+
                         <img
+
                           id="micoff"
+
                           class="mic-icon"
-                          src="../static/images/mic-blue.png"
+
+                          src="{% static 'images/mic-green1.png' %}"
+
                           alt=""
+
                         />
+
                       </button>
-                      <img id="pulseImage" src="../static/images/bars.gif" alt=""/>
+
+                      <img
+
+                        id="pulseImage"
+
+                        src="{% static 'images/bars.gif' %}"
+
+                        alt=""
+
+                      />
+
                     </div>
+
                   </div>
 
-                  <div>
+
+
+
+                  <!-- <div>
+
                     <div class="info">
+
                       <div class="info-c">
+
                         <h3>Initialization</h3>
+
                         <p>Tap on mic and say "Create a ticket"</p>
+
                       </div>
+
                       <div class="info-c">
+
                         <h3>Explanation</h3>
+
                         <p>Describe your problem by providing audio inputs</p>
+
                       </div>
+
                       <div class="info-c">
+
                         <h3>Realization</h3>
+
                         <p>
+
                           Ticket will get generated and unique ID will be shared
+
                           for future referneces
+
                         </p>
+
                       </div>
+
                     </div>
-                  </div>
+
+                  </div> -->
+
                 </div>
+
+
+
 
                 <div class="chatbot-container col-sm-4">
+
                   <div id="header">
-                      <!-- <h1 id="h1">
+
+                    <!-- <h1 id="h1">
+
                         <img
+
                           class="header-icon rounded mx-auto d-block"
+
                           src="../static/images/bot-img.png"
+
                           alt=""
+
                         />
+
                       </h1> -->
+
                   </div>
+
                   <div id="chatbot" class="">
+
                     <div id="conversation">
+
                       <div id="chat-log" class="chat-log">
+
                         <!--p class="user-message"></p-->
+
                         <!--p class="bot-text">Hi! 👋 it's great to see you!</p-->
+
                       </div>
+
                     </div>
+
                     <!-- <form id="chat-form">
-		    <message-container>
+
+        <message-container>
+
                 <input type="text" id="entry-box" name="message" placeholder="Enter your message..">
+
                 <button id="submit-button" type="submit">
+
                     <img class="send-icon" src="../static/images/send-blue.png" alt="">
+
                 </button>
+
             </message-container>
+
         </form> -->
+
                     <!--button id="audiobutton" onclick="startVoiceInput()">
+
             <img id="micoff" class="mic-icon" src="{% static 'images/mic-off1.png' %}" alt="">
+
         </button-->
+
                   </div>
+
                 </div>
+
               </div>
+
             </section>
+
           </main>
+
         </div>
+
       </div>
+
     </div>
+
 
     <!--script>
       // Append a new message to the chat log
@@ -482,19 +583,64 @@
         recognition.stop();
       }
     </script> -->
+    
     <script>
-        function voiceOutput(text) {
-            // Use the SpeechSynthesis API to speak the text
-            const speechSynthesis = window.speechSynthesis;
-            const utterance = new SpeechSynthesisUtterance(text);
-            speechSynthesis.speak(utterance);
+      var duration = 4000;
+      var desiredVoice = null; // Variable to store the desired voice
+      
+      function voiceOutput(text) {
+        const speechSynthesis = window.speechSynthesis;
+        const utterance = new SpeechSynthesisUtterance(text);
+      
+        utterance.rate = 1.3;
+      
+        if (desiredVoice) {
+          // Set the desired voice for the utterance
+          utterance.voice = desiredVoice;
+      
+          utterance.onstart = function(event) {
+            duration = event.elapsedTime * 10 + 1800;
+            console.log("Voice output duration:", duration, "milliseconds");
+          };
+      
+          // Start the speech synthesis
+          speechSynthesis.speak(utterance);
+        } else {
+          console.log("Desired voice not found.");
+          // Handle the case where the desired voice is not available
         }
+      }
+      
+      function fetchVoices() {
+        const speechSynthesis = window.speechSynthesis;
+        var voices = speechSynthesis.getVoices();
+      
+        // Find the desired voice by name
+        desiredVoice = voices.find(function(voice) {
+          return voice.name === "Microsoft Zira - English (United States)";
+        });
+      
+        if (desiredVoice) {
+          console.log("Desired voice found:", desiredVoice.name);
+        } else {
+          console.log("Desired voice not found.");
+          // Handle the case where the desired voice is not available
+        }
+      }
+      
+      // Fetch available voices
+      fetchVoices();
+      
+      // Wait for the voices to be fetched and available
+      speechSynthesis.onvoiceschanged = fetchVoices;
+      
 
 
         setTimeout(function () {
             var chatLog = document.getElementById('chat-log');
-            chatLog.innerHTML += `<p class="bot-text">Hi! 👋 it's great to see you!</p>`;
-        }, 3500);
+            chatLog.innerHTML += `<p class="bot-text">Welcome to Namsii, the Voice Assistant who can handle all your ticket creation needs. Mic On and let me assist you!</p>`;
+            voiceOutput("Welcome to Namsi, the Voice Assistant who can handle all your ticket creation needs. Mic On and let me assist you!");
+        }, 1200);
 
         document.getElementById("chat-form").addEventListener("submit", function (event) {
             event.preventDefault();
@@ -522,7 +668,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: 'chatbot',
+                url: '',
                 data: formData,
                 processData: false,
                 contentType: false,
@@ -556,6 +702,8 @@
         let micImageOn = document.createElement("micon");
         let pulseImage = document.getElementById("pulseImage");
 
+        var isSoundDetected = false;
+        var hasTimeoutStarted = false;
 
         function toggleMic() {
             var audiobutton = document.getElementById('audiobutton');
@@ -569,6 +717,12 @@
             if(micImageOff.classList.contains("mic-iconOn") ){
                      micImageOff.classList.remove("mic-iconOn");
                      pulseImage.style.display = "none";
+
+                     var recognition = new webkitSpeechRecognition();
+                     recognition.stop();
+                     //stopVoiceInput();
+
+                    
             }else{
                 micImageOff.classList.add("mic-iconOn");
                 pulseImage.style.display = "block";
@@ -583,16 +737,109 @@
             recognition.continuous = false;
             recognition.interimResults = false;
 
+             // Flag variable to track user activity
+            //var isUserActive = false;
             toggleMic();
 
+            /*recognition.onstart = function() {
+              console.log('Speech recognition started.');
+              isUserActive = false;
+
+              // Schedule a callback to stop the recognition after 5 seconds
+              setTimeout(function() {
+                recognition.stop();
+                console.log('Speech recognition stopped after 9 seconds.');
+                toggleMic();
+              }, 9000);
+            };*/
             var conversation = document.getElementById('conversation');
             const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit" });
+
+            /*recognition.onclick = (event) => {
+              var recognition = new webkitSpeechRecognition();
+              recognition.stop();
+              console.log("Speech recognition aborted.");
+             
+            };*/
+            
+            recognition.onspeechend = () => {
+              recognition.stop();
+              console.log("Speech recognition has stopped.");
+              
+            };
+            
+            recognition.onerror = (event) => {
+              console.error(`Speech recognition error detected: ${event.error}`);
+
+
+              if (event.error == "aborted") {
+
+                console.log("Speech recognition aborted and stopped.");
+                recognition.stop();
+                // Perform any necessary actions when the recognition is aborted
+
+              }
+              
+              if(event.error == "no-speech"){
+
+              
+                toggleMic();
+                isSoundDetected = false;
+               
+                if (!hasTimeoutStarted) {
+                let chatLog1 = document.createElement('div');
+                chatLog1.innerHTML += `<p class="bot-text">Sorry! I didn't hear you.</p>`;
+                conversation.appendChild(chatLog1);
+                chatLog1.scrollIntoView({ behavior: "smooth" });
+                chatLog1.scrollTop = chatLog1.scrollHeight;
+                voiceOutput("Sorry! I didn't hear you.");
+                
+               
+                  //hasTimeoutStarted = true;
+          
+                  setTimeout(function () {
+                    recognition.start();
+                    toggleMic();
+                    hasTimeoutStarted = true;
+                    console.log("hasTimeoutStarted inside:",hasTimeoutStarted)
+                  }, duration);
+                }
+                else{
+                  let chatLog1 = document.createElement('div');
+                  chatLog1.innerHTML += `<p class="bot-text">No Input from your end. Please click on Mic Button to start again</p>`;
+                  conversation.appendChild(chatLog1);
+                  chatLog1.scrollIntoView({ behavior: "smooth" });
+                  chatLog1.scrollTop = chatLog1.scrollHeight;
+                  toggleMic();
+                  voiceOutput("No Input from your end. Please click on Mic Button to start again.");
+                }
+              }
+              else{
+                
+                return;
+                
+              }
+            
+            };
+
+            
+
+            /*recognition.onsoundend = (event) => {
+              console.log("Sound has stopped being received");
+              
+            };;*/
+
+           
 
             recognition.onresult = function (event) {
                 var result = event.results[event.results.length - 1];
                 var voiceText = result[0].transcript;
+                console.log("voiceText",voiceText)
+                console.log("result",result)
 
-
+              // Set the user activity flag to true
+              //isUserActive = true;
+                    
                 // audiobutton = document.getElementById('audiobutton');
                 // micImageOff = document.getElementById("micoff");
                 //let micImageOn = document.createElement("micon");
@@ -600,48 +847,73 @@
                 // micImageOn.remove(micImageOn);
                 // audiobutton.innerHTML += `<img id="micoff" class="mic-icon" src="static/images/mic-blue.png" alt="">`;
                 //audiobutton.appendChild(micImageOff);
-                 toggleMic();
+                toggleMic();
                 let chatLog1 = document.createElement('div');
                 chatLog1.innerHTML += `<p class="user-message" sentTime="${currentTime}">${voiceText}</p>`;
 
                 conversation.appendChild(chatLog1);
                 //chatLog1.scrollTop = chatLog.scrollHeight;
 
+                
+
 
                 $.ajax({
                     type: 'POST',
-                    url: 'chatbot',
+                    url: '',
                     data: { 'voice_data': voiceText },
                     beforeSend: function (xhr, settings) {
-                        xhr.setRequestHeader("X-CSRFToken", "1wzrVXuFJln6gwJGiA8eWCcR6w9SWcyl8oUFtaRD65Ee8KL4Ji9RAR3mpXDJeYyr");
+                        xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
                     },
                     success: function (response) {
                         chatLog1 = document.createElement('div');
                         //chatLog1.innerHTML += `<img class="botchatimg" src="static/images/botchatimg.png" alt="">`;
                         chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`;
+                        
+                        
                         if (response.voice_output) {
+                          
                             // Call a function to handle voice output, passing response.response_text as the parameter
                             voiceOutput(response.response);
+                          
+                            
                         }
                         conversation.appendChild(chatLog1);
                         chatLog1.scrollIntoView({ behavior: "smooth" });
                         chatLog1.scrollTop = chatLog1.scrollHeight;
+
+                        // Check if the response contains "ticket created successfully"
+                        if (response.response.includes("Ticket created successfully")) {
+                          chatLog1 = document.createElement('div');
+                          
+                          
+                          chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">Thank you for using Namsi! If you need any further assistance,Click the Mic button, and I'll be here to help you out! Goodbye!</p>`;
+                          conversation.appendChild(chatLog1);
+                          chatLog1.scrollIntoView({ behavior: "smooth" });
+                          chatLog1.scrollTop = chatLog1.scrollHeight;
+                          
+                          voiceOutput("Thank you for using Namsi! If you need any further assistance,Click the Mic button, and I'll be here to help you out! Goodbye!"); // Respond with "Thanks" if the condition is met
+                          
+                          
+                          return; // Exit from the code without executing the setTimeout function
+                        }
+
+                        console.log('duration in setTimeout :',duration);
+                        setTimeout(function () {
+                          recognition.start();
+                          toggleMic();
+                      }, duration);
                     },
                     error: function () {
                         console.log('Error during voice input.');
                     }
                 });
+              
+                  
             };
 
-
-
             recognition.start();
+        }
 
-        }
-        function stopVoiceInput() {
-            var recognition = new webkitSpeechRecognition();
-            recognition.stop();
-        }
     </script>
   </body>
 </html>
