@@ -1,8 +1,7 @@
-/*body{
-    
-}*/
+
 
 #audiobutton{
+    position: relative;
     width: 100% !important;
     display: block;
     background: transparent !important;
@@ -40,10 +39,22 @@
  
 }
 
+.row{
+
+  margin: auto !important;
+
+}
+
 
 .row2{
-    height: 80vh;
-    padding: 0px !important;
+  
+  box-sizing: border-box;
+  width: 100%;
+  height: 70vh;
+  padding: 0px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
  
 }
 
@@ -83,7 +94,7 @@ align-items: center;
     border-radius: 30px;
     text-align: justify;
     float: left;
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
     /*width: 210px;*/
     /*position: absolute;*/
     /*margin-left: 60px;*/
@@ -99,7 +110,7 @@ align-items: center;
     border-radius: 15px;
     text-align: justify;
     float: right;
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
     /*width: 210px;*/
   }
   .chat-log {
@@ -135,8 +146,23 @@ align-items: center;
     flex-direction: column;
   }
 
-  #conversation::-webkit-scrollbar {
-    display: none;
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
   }
 
   #chatbot {
@@ -205,10 +231,17 @@ align-items: center;
 
 
  .sizing{
-    width: 50%;
+    width: 80%;
     align-items: center;
  }
 
+ .sizing2{
+
+  width: 50%;
+  margin-left: 10%;
+
+
+ }
 
  
  .mic-iconOn {
@@ -229,18 +262,27 @@ align-items: center;
 
   #pulseImage{
     display:none;
-    margin-inline: 230px;
+    position: absolute;
+    top: 130%;
+    left: 20px;
   }
 
 
   .chatbot-container {
-    width: 750px;
-    margin-right: -970px;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 40px 0px 0px 0px !important;
+
+    height: 100%;
     
     background-color: #F9F9F9;
     border: 1px solid #F9F9F9;
+    border-bottom: none;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
     opacity: 0; /* Set initial opacity to 0 */
         animation: fadeIn 0.5s ease-in forwards; /* Apply the fade-in animation */
         animation-delay: 0.5s; 
@@ -299,6 +341,9 @@ align-items: center;
 
 .Headline{
 
+  position: relative;
+
+  right: 20px;
   color: #2C735E;
 
   font-weight:bold;
@@ -306,15 +351,18 @@ align-items: center;
   /*font-family: Arial, Helvetica, sans-serif;*/
   font-family: cursive;
 
-  font-size: 80px;
+  font-size: 100px;
 
+  /*margin : 10px;*/
 }
 
 .Headline2{
 
-  margin-top: 100px;
+  position: relative;
+  
+  /*margin-top: 100px;
 
-  margin-left: -120px;
+  margin-left: -120px;*/
 
   color: #47D7AC;
 
@@ -323,4 +371,18 @@ align-items: center;
   font-size: 30px;
 
   font-family: cursive;
+
+
 }
+
+.Headline2-text{
+  
+  font-size: 30px;
+  font-family:cursive;
+  position: absolute;
+  bottom:-20%;
+  white-space:nowrap;
+  color: #47D7AC;
+  left: 85%
+}
+

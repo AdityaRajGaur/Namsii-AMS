@@ -6,7 +6,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>NAMSii</title>
     <link rel="icon" href="{% static 'images/bot-icon-green.png' %}" alt="">
-    <meta name="viewport" content="width=device-width, initial-scale=0.8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
+
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
@@ -40,21 +42,23 @@
     ></script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=0.8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
 
   <body>
-    <div class="container">
+    <div class="container-fluid m-0" style="padding:0; margin:0;"  >
 
-      <div class="row g-2">
+      <div class="row g-2" style="margin:0; padding:0;">
 
-        <div class="information col-sm-12 bg-secondary">
+        <div class="information col-sm-7 bg-secondary">
 
-          <header class="row">
+          <header class="row text-center">
 
-            <h1 class="Headline col-sm-4">NAMSii</h1>
+            <div class="Headline col-sm-8 text-right">NAMSii 
+              <span class="Headline2-text">Nagarro Assistant</span>
+            </div>
 
-            <h3 class="Headline2 col-sm-4">-Nagarro Assistant</h3>
+            
 
             <!--img class="bot-logo" src="bot-logo.png" alt="Bot Logo"-->
 
@@ -67,9 +71,9 @@
 
             <section class="section">
 
-              <div class="row row2" style="margin: auto">
+              <div class="row row2 no-gutters" style="margin: auto">
 
-                <div class="col-sm-8 img_cont">
+                <div class="col-sm-8 img_cont sizing2">
 
                   <div class="image-content">
 
@@ -81,11 +85,11 @@
 
                       alt=""
 
-                      width="300px"
+                      width="500px"
 
                     />
 
-                    <div class="sizing mx-auto">
+                    <div class="sizing sizing2 mx-auto">
 
                       <button id="audiobutton" onclick="startVoiceInput()">
 
@@ -101,9 +105,7 @@
 
                         />
 
-                      </button>
-
-                      <img
+                        <img
 
                         id="pulseImage"
 
@@ -112,6 +114,10 @@
                         alt=""
 
                       />
+
+                      </button>
+
+                      
 
                     </div>
 
@@ -163,65 +169,6 @@
 
 
 
-                <div class="chatbot-container col-sm-4">
-
-                  <div id="header">
-
-                    <!-- <h1 id="h1">
-
-                        <img
-
-                          class="header-icon rounded mx-auto d-block"
-
-                          src="../static/images/bot-img.png"
-
-                          alt=""
-
-                        />
-
-                      </h1> -->
-
-                  </div>
-
-                  <div id="chatbot" class="">
-
-                    <div id="conversation">
-
-                      <div id="chat-log" class="chat-log">
-
-                        <!--p class="user-message"></p-->
-
-                        <!--p class="bot-text">Hi! 👋 it's great to see you!</p-->
-
-                      </div>
-
-                    </div>
-
-                    <!-- <form id="chat-form">
-
-        <message-container>
-
-                <input type="text" id="entry-box" name="message" placeholder="Enter your message..">
-
-                <button id="submit-button" type="submit">
-
-                    <img class="send-icon" src="../static/images/send-blue.png" alt="">
-
-                </button>
-
-            </message-container>
-
-        </form> -->
-
-                    <!--button id="audiobutton" onclick="startVoiceInput()">
-
-            <img id="micoff" class="mic-icon" src="{% static 'images/mic-off1.png' %}" alt="">
-
-        </button-->
-
-                  </div>
-
-                </div>
 
               </div>
 
@@ -230,388 +177,78 @@
           </main>
 
         </div>
+          
+        <div class="chatbot-container col-sm-4" style="margin: auto">
 
+          <!--div id="header">
+
+            <h1 id="h1">
+
+                <img
+
+                  class="header-icon rounded mx-auto d-block"
+
+                  src="../static/images/bot-img.png"
+
+                  alt=""
+
+                />
+
+              </h1>
+
+          </div-->
+
+          <div id="chatbot" class="">
+
+            <div id="conversation">
+
+              <div id="chat-log" class="chat-log">
+
+                <!--p class="user-message"></p-->
+
+                <!--p class="bot-text">Hi! 👋 it's great to see you!</p-->
+
+              </div>
+
+            </div>
+
+            <!-- <form id="chat-form">
+
+<message-container>
+
+        <input type="text" id="entry-box" name="message" placeholder="Enter your message..">
+
+        <button id="submit-button" type="submit">
+
+            <img class="send-icon" src="../static/images/send-blue.png" alt="">
+
+        </button>
+
+    </message-container>
+
+</form> -->
+
+            <!--button id="audiobutton" onclick="startVoiceInput()">
+
+    <img id="micoff" class="mic-icon" src="{% static 'images/mic-off1.png' %}" alt="">
+
+</button-->
+
+          </div>
+
+        </div>
       </div>
 
     </div>
-
-
-    <!--script>
-      // Append a new message to the chat log
-      //function appendMessage(message) {
-      //var chatLog = $('#chat-log');
-      //var messageElement = $('<p>').text(message);
-     // chatLog.append(messageElement);
-    //}
-
-
-    setTimeout(function() {
-        var chatLog = document.getElementById('chat-log');
-        //chatLog.innerHTML += `<img class="botchatimg" src="{% static 'images/botchatimg.png' %}" alt="">`;
-        chatLog.innerHTML += `<p class="bot-text">Hi! 👋 it's great to see you!</p>`;
-        //chatLog.appendChild(chatLog);
-      }, 3500);
-
-
-
-        document.getElementById("chat-form").addEventListener("submit", function(event) {
-            event.preventDefault();
-            var formData = new FormData(event.target);
-            var csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
-            formData.append('csrfmiddlewaretoken', csrftoken);
-
- 
-            var conversation = document.getElementById('conversation');
-
-            var userMessage = document.getElementById('entry-box').value;
-            var chatLog = document.getElementById('chat-log');
-
-            // Clear input field
-            document.getElementById('entry-box').value = '';
-            const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit" });
-
-            //chatLog.innerHTML += 'You: ' + userMessage + '\n';
-            //chatLog.innerHTML += '<p class="user-message">You: ' + userMessage + '</p>\n';
-            //chatLog.innerHTML += '<p class="bot-text">You: ' + userMessage + '</p>\n';
-
-            let chatLog1 = document.createElement('div');
-            //chatLog1.classList.add('chat-log', 'user-message');
-            //chatLog1.innerHTML += `<img class="userchatimg" src="{% static 'images/userchatimg.png' %}" alt="">`;
-            chatLog1.innerHTML += `<p class="user-message" sentTime="${currentTime}">${userMessage}</p>`;
-			conversation.appendChild(chatLog1);
-            chatLog1.scrollTop = chatLog.scrollHeight;
-
- 
-
-            $.ajax({
-                type: 'POST',
-                url: 'chatbot',
-                data: formData,
-                processData: false,
-                contentType: false,
-
-                //chatLog1 = document.createElement('div');
-                //chatLog1.innerHTML += '<div class="loading">...</div>';
-                //conversation.appendChild(chatLog1);
-
-                success: function(response) {
-
-                    chatLog1 = document.createElement('div');
-                    
-                    //chatLog1.classList.add('chat-log','bot-text');
-                    //chatLog.innerHTML += 'Bot: ' + response.response + '\n';
-                    //chatLog.innerHTML += '<p class="bot-message">Bot: ' + response.response + '</p>\n';
-                    //chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`;
-					
-                    //if (response.results.length === 3) {
-                      //  chatLog.innerHTML += ` 
-                        //<p class="bot-text" sentTime="${currentTime}">${response.results[0]}</p> 
-                        //<p class="bot-text" sentTime="${currentTime}">${response.results[1]}</p> 
-                        //<p class="bot-text" sentTime="${currentTime}">${response.results[2]}</p> `; } 
-                        
-                        
-                        //else if (response.results.length === 1) { 
-                            //chatLog1.innerHTML += `<img class="botchatimg" src="{% static 'images/botchatimg.png' %}" alt="">`;
-                            chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`; 
-                        //}
-                                
-                
-                    
-                    conversation.appendChild(chatLog1);
-                    //message.scrollIntoView({behavior: "smooth"});
-                    chatLog1.scrollTop = chatLog.scrollHeight;
-                    chatLog1.scrollIntoView({behavior: "smooth"});
-
-                },
-                error: function() {
-                    console.log('Error occurred.');
-                }
-            });
-        });
-
-
-        var audiobutton = document.getElementById('audiobutton');
-        let micImageOff = document.getElementById("micoff");
-        let micImageOn = document.createElement("micon");
-
-        function toggleMic() {
-            var audiobutton = document.getElementById('audiobutton');
-            let micImageOff = document.getElementById("micoff");
-            let micImageOn = document.createElement("micon");
-            micImageOff.remove(micImageOff);
-            audiobutton.innerHTML += `<img id="micon" onclick="stopVoiceInput()" class="mic-iconOn" src="{% static 'images/mic-blue.png' %}" alt="">`;
-            //audiobutton.appendChild(micImageOn);
-            
-              
-        }
- 
-
-        function startVoiceInput() {
-            var recognition = new webkitSpeechRecognition();
-            recognition.continuous = false;
-            recognition.interimResults = false;
-
-            toggleMic();
-
-            var conversation = document.getElementById('conversation');
-			const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit" });
-
-            recognition.onresult = function(event) {
-                var result = event.results[event.results.length - 1];
-                var voiceText = result[0].transcript;
-
-
-                audiobutton = document.getElementById('audiobutton');
-                micImageOff = document.getElementById("micoff");
-                //let micImageOn = document.createElement("micon");
-                micImageOn = document.getElementById("micon");
-                micImageOn.remove(micImageOn);
-                audiobutton.innerHTML += `<img id="micoff" class="mic-icon" src="{% static 'images/mic-blue.png' %}" alt="">`;
-                //audiobutton.appendChild(micImageOff);
-
-                let chatLog1 = document.createElement('div');
-                //chatLog.innerHTML += 'You: ' + voiceText + '\n';
-                //chatLog.innerHTML += '<p class="user-message">You: ' + voiceText + '</p>\n';
-                //chatLog1.innerHTML += `<img class="userchatimg" src="{% static 'images/userchatimg.png' %}" alt="">`;
-                chatLog1.innerHTML += `<p class="user-message" sentTime="${currentTime}">${voiceText}</p>`;
-                
-                conversation.appendChild(chatLog1);
-                //chatLog1.scrollTop = chatLog.scrollHeight;
-
-
-                $.ajax({
-                    type: 'POST',
-                    url: 'chatbot',
-                    data: { 'voice_data': voiceText },
-                    beforeSend: function(xhr, settings) {
-                        xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
-                    },
-                    success: function(response) {
-                        //let chatLog1 = document.createElement('div');
-                        //chatLog.innerHTML += 'You: ' + voiceText + '\n';
-                        //chatLog.innerHTML += '<p class="user-message">You: ' + voiceText + '</p>\n';
-                        //chatLog1.innerHTML += `<p class="user-message"sentTime="${currentTime}">${voiceText}</p>`;
-						
-						//conversation.appendChild(chatLog1);
-                        
-                        //chatLog.innerHTML += 'Bot: ' + response.response + '\n';
-
-                        //chatLog.innerHTML += '<p class="bot-message">Bot: ' + response.response + '</p>\n';
-                        chatLog1 = document.createElement('div');
-                        //chatLog1.innerHTML += `<img class="botchatimg" src="{% static 'images/botchatimg.png' %}" alt="">`;
-                        chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`;
-
-						conversation.appendChild(chatLog1);
-                        chatLog1.scrollIntoView({behavior: "smooth"});
-                        chatLog1.scrollTop = chatLog1.scrollHeight;
-                    },
-                    error: function() {
-                        console.log('Error during voice input.');
-                    }
-                });
-            };
-
- 
-            
-            recognition.start();
-            
-        }
-        function stopVoiceInput() {
-            var recognition = new webkitSpeechRecognition();
-            recognition.stop();
-        }
-</script-->
-
-    <!-- <script>
-      console.log("Inside the Script");
-      function voiceOutput(text) {
-        // Use the SpeechSynthesis API to speak the text
-        const speechSynthesis = window.speechSynthesis;
-        const utterance = new SpeechSynthesisUtterance(text);
-        speechSynthesis.speak(utterance);
-      }
-
-      setTimeout(function () {
-        var chatLog = document.getElementById("chat-log");
-        //chatLog.innerHTML += `<img class="botchatimg" src="{% static 'images/botchatimg.png' %}" alt="">`;
-        chatLog.innerHTML += `<p class="bot-text">Hi! 👋 it's great to see you!</p>`;
-        //chatLog.appendChild(chatLog);
-      }, 3500);
-
-      document
-        .getElementById("chat-form")
-        .addEventListener("submit", function (event) {
-          event.preventDefault();
-          var formData = new FormData(event.target);
-          var csrftoken = document.querySelector(
-            "[name=csrfmiddlewaretoken]"
-          ).value;
-          formData.append("csrfmiddlewaretoken", csrftoken);
-
-          var conversation = document.getElementById("conversation");
-
-          var userMessage = document.getElementById("entry-box").value;
-          var chatLog = document.getElementById("chat-log");
-
-          // Clear input field
-          document.getElementById("entry-box").value = "";
-          const currentTime = new Date().toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          });
-
-          let chatLog1 = document.createElement("div");
-
-          chatLog1.innerHTML += `<p class="user-message" sentTime="${currentTime}">${userMessage}</p>`;
-          conversation.appendChild(chatLog1);
-          chatLog1.scrollTop = chatLog.scrollHeight;
-
-          console.log("Ouside the Ajax");
-          $.ajax({
-            type: "POST",
-            url: "chatbot",
-            data: formData,
-            processData: false,
-            contentType: false,
-
-            success: function (response) {
-              console.log("Ouside the Ajax");
-              chatLog1 = document.createElement("div");
-              console.log(response.response);
-              console.log(response.voice_output);
-              chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`;
-
-              if (response.voice_output) {
-                // Call a function to handle voice output, passing response.response_text as the parameter
-                voiceOutput(response.response);
-              }
-
-              //old code below
-              //     chatLog.innerHTML += '<p class="bot-message">Bot: ' + response.response + '</p>\n';
-
-              //     if (response.voice_output) {
-              // // Call a function to handle voice output, passing response.response_text as the parameter
-              //          voiceOutput(response.response);
-              //     }
-
-              //old code above
-
-              conversation.appendChild(chatLog1);
-              //message.scrollIntoView({behavior: "smooth"});
-              chatLog1.scrollTop = chatLog.scrollHeight;
-              chatLog1.scrollIntoView({ behavior: "smooth" });
-            },
-            error: function () {
-              console.log("Error occurred.");
-            },
-          });
-        });
-
-      var audiobutton = document.getElementById("audiobutton");
-      let micImageOff = document.getElementById("micoff");
-      let micImageOn = document.createElement("micon");
-
-      function toggleMic() {
-        var audiobutton = document.getElementById("audiobutton");
-        let micImageOff = document.getElementById("micoff");
-        let micImageOn = document.createElement("micon");
-        micImageOff.remove(micImageOff);
-        audiobutton.innerHTML += `<img id="micon" onclick="stopVoiceInput()" class="mic-iconOn" src="{% static 'images/mic-blue.png' %}" alt="">`;
-        //audiobutton.appendChild(micImageOn);
-      }
-
-      function startVoiceInput() {
-        var recognition = new webkitSpeechRecognition();
-        recognition.continuous = false;
-        recognition.interimResults = false;
-
-        toggleMic();
-
-        var conversation = document.getElementById("conversation");
-        const currentTime = new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        });
-
-        recognition.onresult = function (event) {
-          var result = event.results[event.results.length - 1];
-          var voiceText = result[0].transcript;
-
-          audiobutton = document.getElementById("audiobutton");
-          micImageOff = document.getElementById("micoff");
-          //let micImageOn = document.createElement("micon");
-          micImageOn = document.getElementById("micon");
-          micImageOn.remove(micImageOn);
-          audiobutton.innerHTML += `<img id="micoff" class="mic-icon" src="{% static 'images/mic-blue.png' %}" alt="">`;
-          //audiobutton.appendChild(micImageOff);
-
-          let chatLog1 = document.createElement("div");
-          chatLog1.innerHTML += `<p class="user-message" sentTime="${currentTime}">${voiceText}</p>`;
-
-          conversation.appendChild(chatLog1);
-          //chatLog1.scrollTop = chatLog.scrollHeight;
-
-          $.ajax({
-            type: "POST",
-            url: "chatbot",
-            data: { voice_data: voiceText },
-            beforeSend: function (xhr, settings) {
-              xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
-            },
-            success: function (response) {
-              chatLog1 = document.createElement("div");
-              //chatLog1.innerHTML += `<img class="botchatimg" src="{% static 'images/botchatimg.png' %}" alt="">`;
-              chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`;
-              if (response.voice_output) {
-                // Call a function to handle voice output, passing response.response_text as the parameter
-                voiceOutput(response.response);
-              }
-              conversation.appendChild(chatLog1);
-              chatLog1.scrollIntoView({ behavior: "smooth" });
-              chatLog1.scrollTop = chatLog1.scrollHeight;
-            },
-            error: function () {
-              console.log("Error during voice input.");
-            },
-          });
-        };
-
-        recognition.start();
-      }
-      function stopVoiceInput() {
-        var recognition = new webkitSpeechRecognition();
-        recognition.stop();
-      }
-    </script> -->
     
-    <script>
-      var duration = 4000;
+  <script>
+
+      var duration;
       var desiredVoice = null; // Variable to store the desired voice
-      
-      function voiceOutput(text) {
-        const speechSynthesis = window.speechSynthesis;
-        const utterance = new SpeechSynthesisUtterance(text);
-      
-        utterance.rate = 1.3;
-      
-        if (desiredVoice) {
-          // Set the desired voice for the utterance
-          utterance.voice = desiredVoice;
-      
-          utterance.onstart = function(event) {
-            duration = event.elapsedTime * 10 + 1800;
-            console.log("Voice output duration:", duration, "milliseconds");
-          };
-      
-          // Start the speech synthesis
-          speechSynthesis.speak(utterance);
-        } else {
-          console.log("Desired voice not found.");
-          // Handle the case where the desired voice is not available
-        }
-      }
-      
-      function fetchVoices() {
+      var isFirstUtterance = true; // Flag variable to track the first utterance
+      var desiredVoice = "US English Female"; // Specify the desired voice
+
+      /*function fetchVoices() {
         const speechSynthesis = window.speechSynthesis;
         var voices = speechSynthesis.getVoices();
       
@@ -623,7 +260,7 @@
         if (desiredVoice) {
           console.log("Desired voice found:", desiredVoice.name);
         } else {
-          console.log("Desired voice not found.");
+          console.log("Desired voice not found in fetchVoices.");
           // Handle the case where the desired voice is not available
         }
       }
@@ -633,16 +270,85 @@
       
       // Wait for the voices to be fetched and available
       speechSynthesis.onvoiceschanged = fetchVoices;
+
+      function voiceOutput(text) {
+        
+        const speechSynthesis = window.speechSynthesis;
+        const utterance = new SpeechSynthesisUtterance(text);
+      
+        utterance.rate = 1.3;
+      
+        if (desiredVoice) {
+          // Set the desired voice for the utterance
+          utterance.voice = desiredVoice;
+      
+          
+          utterance.onend = function(event) {
+            
+            if (isFirstUtterance) {
+              isFirstUtterance = false;
+            } else {
+              startVoiceInput();
+              console.log("On end event activated");
+            }
+          };
+        
+          // Start the speech synthesis
+          speechSynthesis.speak(utterance);
+        } 
+        else {
+          console.log("Desired voice not found in voiceOutput.");
+          // Handle the case where the desired voice is not available
+        }
+      }*/
+
+      function voiceOutput(text) {
+        responsiveVoice.speak(text, desiredVoice, {
+          rate: 1.3,
+          onend: function() {
+            if (isFirstUtterance) {
+              isFirstUtterance = false;
+            } 
+            else {
+
+              // List of scenarios to handle
+              var scenarios = ["stop mic","I am sorry, currently I do not support sharing the Ticket status. Let me know if there is anything else I can assist you with.","Oops!!! Facing some Internal issue. Sorry for the inconvenience","Thank you for using Namsi! If you need any further assistance,Click the Mic button, and I'll be here to help you out! Goodbye!", "Ok, ending this conversation now. Please click on Mic On once ready and I will assist you.","No Input from your end. Please click on Mic Button to start again.", "abort mic", "thanks for using Namsii"];
+              
+               // Check if any scenario matches
+              var isMatched = false;
+              for (var i = 0; i < scenarios.length; i++) {
+                if (text.includes(scenarios[i])) {
+                  console.log("Scenario matched: " + scenarios[i]);
+                  isMatched = true;
+                  break; // Exit the loop once a match is found
+                }
+              }
+        
+        // Call startVoiceInput() if no match found
+        if (!isMatched) {
+          startVoiceInput();
+        }
+      }
+    }
+  });
+}
       
 
+      //Welcome mesaage function
+      
+      function WelcomeMsg() {
+      
 
-        setTimeout(function () {
-            var chatLog = document.getElementById('chat-log');
-            chatLog.innerHTML += `<p class="bot-text">Welcome to Namsii, the Voice Assistant who can handle all your ticket creation needs. Mic On and let me assist you!</p>`;
-            voiceOutput("Welcome to Namsi, the Voice Assistant who can handle all your ticket creation needs. Mic On and let me assist you!");
-        }, 1200);
+      var chatLog = document.getElementById('chat-log');
+      var chatLog1 = document.createElement('div');
+      chatLog1.innerHTML = `<p class="bot-text">Welcome to Namsii, the Voice Assistant who can handle all your ticket creation needs. Mic On and let me assist you!</p>`;
+      chatLog.appendChild(chatLog1);
+      voiceOutput("Welcome to Namsi, the Voice Assistant who can handle all your ticket creation needs. Mic On and let me assist you!");
+      }
 
-        document.getElementById("chat-form").addEventListener("submit", function (event) {
+      WelcomeMsg();       
+
+        /*document.getElementById("chat-form").addEventListener("submit", function (event) {
             event.preventDefault();
             var formData = new FormData(event.target);
             var csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
@@ -679,10 +385,7 @@
                     console.log(response.voice_output)
                     chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`;
 
-                    if (response.voice_output) {
-                        // Call a function to handle voice output, passing response.response_text as the parameter
-                        voiceOutput(response.response);
-                    }
+                    
 
                     conversation.appendChild(chatLog1);
                     //message.scrollIntoView({behavior: "smooth"});
@@ -694,76 +397,54 @@
                     console.log('Error occurred.');
                 }
             });
-        });
-
-
-        var audiobutton = document.getElementById('audiobutton');
-        let micImageOff = document.getElementById("micoff");
-        let micImageOn = document.createElement("micon");
-        let pulseImage = document.getElementById("pulseImage");
+        });*/
 
         var isSoundDetected = false;
-        var hasTimeoutStarted = false;
+        //var hasTimeoutStarted = false;
+        let recognition; // Declare the recognition object
 
         function toggleMic() {
             var audiobutton = document.getElementById('audiobutton');
             let micImageOff = document.getElementById("micoff");
             let micImageOn = document.createElement("micon");
-            let pulseImage = document.getElementById("pulseImage")
+            let pulseImage = document.getElementById("pulseImage");
             
-            // micImageOff.remove(micImageOff);
-            // audiobutton.innerHTML += `<img id="micon" onclick="stopVoiceInput()" class="mic-iconOn" src="static/images/mic-blue.png" alt="">`;
-            //audiobutton.appendChild(micImageOn);
-            if(micImageOff.classList.contains("mic-iconOn") ){
-                     micImageOff.classList.remove("mic-iconOn");
-                     pulseImage.style.display = "none";
+            if(micImageOff.classList.contains("mic-iconOn") )
+            {
+              micImageOff.classList.remove("mic-iconOn");
+              pulseImage.style.display = "none";
 
-                     var recognition = new webkitSpeechRecognition();
-                     recognition.stop();
-                     //stopVoiceInput();
-
+              stopVoiceInput();
                     
-            }else{
-                micImageOff.classList.add("mic-iconOn");
-                pulseImage.style.display = "block";
             }
-
-
-
+            else
+            {
+              micImageOff.classList.add("mic-iconOn");
+              pulseImage.style.display = "block";
+              
+            }
         }
-
+        
         function startVoiceInput() {
             var recognition = new webkitSpeechRecognition();
             recognition.continuous = false;
             recognition.interimResults = false;
-
-             // Flag variable to track user activity
-            //var isUserActive = false;
+            
             toggleMic();
 
-            /*recognition.onstart = function() {
-              console.log('Speech recognition started.');
-              isUserActive = false;
-
-              // Schedule a callback to stop the recognition after 5 seconds
-              setTimeout(function() {
-                recognition.stop();
-                console.log('Speech recognition stopped after 9 seconds.');
-                toggleMic();
-              }, 9000);
-            };*/
             var conversation = document.getElementById('conversation');
             const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit" });
 
-            /*recognition.onclick = (event) => {
-              var recognition = new webkitSpeechRecognition();
-              recognition.stop();
-              console.log("Speech recognition aborted.");
-             
-            };*/
+
             
+            recognition.onstart = function() {
+              //recognition.start();
+              console.log("Speech recognition started.")
+             
+            };
+
             recognition.onspeechend = () => {
-              recognition.stop();
+              //recognition.stop();
               console.log("Speech recognition has stopped.");
               
             };
@@ -771,22 +452,26 @@
             recognition.onerror = (event) => {
               console.error(`Speech recognition error detected: ${event.error}`);
 
-
               if (event.error == "aborted") {
 
                 console.log("Speech recognition aborted and stopped.");
-                recognition.stop();
-                // Perform any necessary actions when the recognition is aborted
+                
+                stopVoiceInput();
+                return;
 
               }
+
+              console.log("isSoundDetected:",isSoundDetected);
               
               if(event.error == "no-speech"){
 
               
                 toggleMic();
-                isSoundDetected = false;
+                //isSoundDetected = false;
+
+                console.log("Inside error no speech:",isSoundDetected);
                
-                if (!hasTimeoutStarted) {
+                if (!isSoundDetected) {
                 let chatLog1 = document.createElement('div');
                 chatLog1.innerHTML += `<p class="bot-text">Sorry! I didn't hear you.</p>`;
                 conversation.appendChild(chatLog1);
@@ -795,29 +480,20 @@
                 voiceOutput("Sorry! I didn't hear you.");
                 
                
-                  //hasTimeoutStarted = true;
-          
-                  setTimeout(function () {
-                    recognition.start();
-                    toggleMic();
-                    hasTimeoutStarted = true;
-                    console.log("hasTimeoutStarted inside:",hasTimeoutStarted)
-                  }, duration);
+                isSoundDetected = true;
+  
                 }
                 else{
+
+                  console.log("inside else of error no speech:",isSoundDetected);
                   let chatLog1 = document.createElement('div');
                   chatLog1.innerHTML += `<p class="bot-text">No Input from your end. Please click on Mic Button to start again</p>`;
                   conversation.appendChild(chatLog1);
                   chatLog1.scrollIntoView({ behavior: "smooth" });
                   chatLog1.scrollTop = chatLog1.scrollHeight;
-                  toggleMic();
                   voiceOutput("No Input from your end. Please click on Mic Button to start again.");
+                  return;
                 }
-              }
-              else{
-                
-                return;
-                
               }
             
             };
@@ -850,7 +526,7 @@
                 toggleMic();
                 let chatLog1 = document.createElement('div');
                 chatLog1.innerHTML += `<p class="user-message" sentTime="${currentTime}">${voiceText}</p>`;
-
+                isSoundDetected = true;
                 conversation.appendChild(chatLog1);
                 //chatLog1.scrollTop = chatLog.scrollHeight;
 
@@ -870,16 +546,24 @@
                         chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">${response.response}</p>`;
                         
                         
+                        
+
                         if (response.voice_output) {
-                          
-                            // Call a function to handle voice output, passing response.response_text as the parameter
-                            voiceOutput(response.response);
-                          
-                            
+                         
+                              voiceOutput(response.response)
                         }
+
+
                         conversation.appendChild(chatLog1);
                         chatLog1.scrollIntoView({ behavior: "smooth" });
                         chatLog1.scrollTop = chatLog1.scrollHeight;
+
+                        if (response.response.includes("Ok, ending this conversation now.")) {
+                          
+                          console.log("Closing conversation");
+                          
+                          return; // Exit from the code without executing the setTimeout function
+                        }
 
                         // Check if the response contains "ticket created successfully"
                         if (response.response.includes("Ticket created successfully")) {
@@ -897,14 +581,17 @@
                           return; // Exit from the code without executing the setTimeout function
                         }
 
-                        console.log('duration in setTimeout :',duration);
-                        setTimeout(function () {
-                          recognition.start();
-                          toggleMic();
-                      }, duration);
                     },
                     error: function () {
                         console.log('Error during voice input.');
+                        chatLog1 = document.createElement('div');
+                        chatLog1.innerHTML += `<p class="bot-text" sentTime="${currentTime}">Oops!!! Facing some Internal issue. Sorry for the inconvenience..</p>`;
+                        conversation.appendChild(chatLog1);
+                        chatLog1.scrollIntoView({ behavior: "smooth" });
+                        chatLog1.scrollTop = chatLog1.scrollHeight;
+                          
+                        voiceOutput("Oops!!! Facing some Internal issue. Sorry for the inconvenience.."); // Respond with "Error Response" if the condition is met
+                          
                     }
                 });
               
@@ -912,6 +599,13 @@
             };
 
             recognition.start();
+        }
+
+        function stopVoiceInput() {
+          if (recognition) {
+            recognition.stop();
+            recognition = null;
+          }
         }
 
     </script>
