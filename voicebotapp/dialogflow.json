@@ -1,0 +1,14 @@
+{
+    "type": "service_account",
+    "project_id": "handy-digit-387917",
+    "private_key_id": "4e0ccea468d58ae20075b2c34b3754da571d56c7",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCyAuPaD1+o/RjS\n9gkwOHhK80d9sXR3jUBXq2C/wig8kI3mk1ESQSbIcx8rSSeL/d1+/Ry8tDcYq8O5\nVJTsWDnHAVREXuF9olgJgOlAnPxOirOuAXgPUy+dlpCpTx6SPIAkUv2wAB6bBCi/\nssezPf72WhPTl3Cj0/dFClGQsfLHehUoZH4P/wMb+lRZQMSJKgXYqhDbqO7xYzc5\n2XzsMUkkUjDbepNaPzngX8h4yhw3GPGT7/TUCXBZaB30Tn0hYcVEvnYpWRqKaiQK\nIeDR60gGXv/QWVkYLzmxCmbh2+j45uk8PB/i34DElWoMF4+D1CLpSbYUHMABCJf4\nF8Jt3T6dAgMBAAECggEABmldPJbuKp+HG94ZwZ9fEdAGZKwWFlJDnYTCNNXw7hGE\n0ue+dUpcc77VwhDd+EhaCH9kYBWboGtbXtsBjCu3VQgiuV2zgHtu8VSv0hB1c/zB\n8QQDh4XHAsWQC1EauEiukuBcW9D9STcSoqj1UWrruoLPEQF04Km7T8TJ4EzQgke/\nWdCaaQpDh/VlhHWqvvEI3by9/s5rhCge80n0hWVdyHbikHSQtHgGakPqm0nPMsr8\nanoGOOgeeBupzspJvOxf3XaTVCtO+OrhXLm2QfbrHmtIjf0FbeXlv/N+wz+oHTQ8\n50gtfVOFvIbk/VA4pGdRslAGTH55R3XZ8uUcWnDHgQKBgQD4muz11vfaM0dgBjy6\nouzADcZoSaYvusLCNfP2GNq+SBA0gMES5Q9tJZFmiBqkE0aVfczqAwcHFW8yM+ny\niVsM6FiqlwfwcqM/4K5J7btcfDo9CO1jHYcpkIuRVCCo54240p/tTbnXyQdLZEbA\nOOmcJx1IgA/g5jm8nak+KLUmQQKBgQC3TmhFLyPWaEzZjWWfcT5upjiNBLUdZTEe\nspFxbCiYAFqZ5cy8DFfimv5wxp2FoY0lGwYQaMAbQ6HzrG1gi8JPZbsdbQyNrmDA\n9TlaTU/Zm8cPwAnt9mQ14m8/iePhWbOgRzjhdduG0KX6MXjcPTOA40gSNLEXgbbm\nHhJqEtIZXQKBgQDkYf76QYfkTmNtlY1Ir8/rBzyUJcSj6GBu5f2+wUqCr9UjRn0Y\njJHFZVPT64j93i9jufP7rthP66MBbauoAgNBMlnyLVk/zTCnyBKVG+6Zog4mcAMU\noNXAm2d8FNsED+SkO+prqJHn6GfpHK/aeu4xY8WFCxCLPTUhT31g+yifgQKBgCEY\nxhjfxw+6a03IivW747Lkzkcf93ekQrcxNLOO/NFdFv68kDfP3rpqk9BW/DAZmDt/\n4ptp3m3Ny1sM4f7RnTbqvls0ylR2jL+qRz23wdgfmVSNrv1JRJS6Gq4VPpD8ukMR\nOQL0Xbu8xosjDZhucHMwFl47J1KAOD7aZSbD2S19AoGBAOeyAV0X4PvrIc1vlyQ8\nXaSkY/tZTcBG6uVWAars6st3zSFljuxW6rfLbEZdAnTovy1Kwa/HNHieaUIRW5qJ\neyA5kY2ZzFCfTipaTGxHtZ+a77QG3bOJUu7SwEEo0oieBXFsMe+i18oAu/U2mf6m\nW/SL6tV/LKkt5eLmFq23ysGb\n-----END PRIVATE KEY-----\n",
+    "client_email": "jirabot@handy-digit-387917.iam.gserviceaccount.com",
+    "client_id": "113267643827485920764",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/jirabot%40handy-digit-387917.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+  }
+  

@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>NAMSii</title>
     <link rel="icon" href="{% static 'images/bot-icon-green.png' %}" alt="">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.8" />
     <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
 
     <link
@@ -42,23 +42,21 @@
     ></script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.8" />
   </head>
 
   <body>
-    <div class="container-fluid m-0" style="padding:0; margin:0;"  >
+    <div class="container">
 
-      <div class="row g-2" style="margin:0; padding:0;">
+      <div class="row g-2">
 
-        <div class="information col-sm-7 bg-secondary">
+        <div class="information col-sm-12 bg-secondary">
 
-          <header class="row text-center">
+          <header class="row">
 
-            <div class="Headline col-sm-8 text-right">NAMSii 
-              <span class="Headline2-text">Nagarro Assistant</span>
-            </div>
+            <h1 class="Headline col-sm-4">NAMSii</h1>
 
-            
+            <h3 class="Headline2 col-sm-4">-Nagarro Assistant</h3>
 
             <!--img class="bot-logo" src="bot-logo.png" alt="Bot Logo"-->
 
@@ -71,9 +69,9 @@
 
             <section class="section">
 
-              <div class="row row2 no-gutters" style="margin: auto">
+              <div class="row row2" style="margin: auto">
 
-                <div class="col-sm-8 img_cont sizing2">
+                <div class="col-sm-8 img_cont">
 
                   <div class="image-content">
 
@@ -85,11 +83,11 @@
 
                       alt=""
 
-                      width="500px"
+                      width="300px"
 
                     />
 
-                    <div class="sizing sizing2 mx-auto">
+                    <div class="sizing mx-auto">
 
                       <button id="audiobutton" onclick="startVoiceInput()">
 
@@ -105,7 +103,9 @@
 
                         />
 
-                        <img
+                      </button>
+
+                      <img
 
                         id="pulseImage"
 
@@ -114,10 +114,6 @@
                         alt=""
 
                       />
-
-                      </button>
-
-                      
 
                     </div>
 
@@ -169,6 +165,65 @@
 
 
 
+                <div class="chatbot-container col-sm-4">
+
+                  <div id="header">
+
+                    <!-- <h1 id="h1">
+
+                        <img
+
+                          class="header-icon rounded mx-auto d-block"
+
+                          src="../static/images/bot-img.png"
+
+                          alt=""
+
+                        />
+
+                      </h1> -->
+
+                  </div>
+
+                  <div id="chatbot" class="">
+
+                    <div id="conversation">
+
+                      <div id="chat-log" class="chat-log">
+
+                        <!--p class="user-message"></p-->
+
+                        <!--p class="bot-text">Hi! 👋 it's great to see you!</p-->
+
+                      </div>
+
+                    </div>
+
+                    <!-- <form id="chat-form">
+
+        <message-container>
+
+                <input type="text" id="entry-box" name="message" placeholder="Enter your message..">
+
+                <button id="submit-button" type="submit">
+
+                    <img class="send-icon" src="../static/images/send-blue.png" alt="">
+
+                </button>
+
+            </message-container>
+
+        </form> -->
+
+                    <!--button id="audiobutton" onclick="startVoiceInput()">
+
+            <img id="micoff" class="mic-icon" src="{% static 'images/mic-off1.png' %}" alt="">
+
+        </button-->
+
+                  </div>
+
+                </div>
 
               </div>
 
@@ -177,66 +232,7 @@
           </main>
 
         </div>
-          
-        <div class="chatbot-container col-sm-4" style="margin: auto">
 
-          <!--div id="header">
-
-            <h1 id="h1">
-
-                <img
-
-                  class="header-icon rounded mx-auto d-block"
-
-                  src="../static/images/bot-img.png"
-
-                  alt=""
-
-                />
-
-              </h1>
-
-          </div-->
-
-          <div id="chatbot" class="">
-
-            <div id="conversation">
-
-              <div id="chat-log" class="chat-log">
-
-                <!--p class="user-message"></p-->
-
-                <!--p class="bot-text">Hi! 👋 it's great to see you!</p-->
-
-              </div>
-
-            </div>
-
-            <!-- <form id="chat-form">
-
-<message-container>
-
-        <input type="text" id="entry-box" name="message" placeholder="Enter your message..">
-
-        <button id="submit-button" type="submit">
-
-            <img class="send-icon" src="../static/images/send-blue.png" alt="">
-
-        </button>
-
-    </message-container>
-
-</form> -->
-
-            <!--button id="audiobutton" onclick="startVoiceInput()">
-
-    <img id="micoff" class="mic-icon" src="{% static 'images/mic-off1.png' %}" alt="">
-
-</button-->
-
-          </div>
-
-        </div>
       </div>
 
     </div>
@@ -312,17 +308,17 @@
             else {
 
               // List of scenarios to handle
-              var scenarios = ["stop mic","I am sorry, currently I do not support sharing the Ticket status. Let me know if there is anything else I can assist you with.","Oops!!! Facing some Internal issue. Sorry for the inconvenience","Thank you for using Namsi! If you need any further assistance,Click the Mic button, and I'll be here to help you out! Goodbye!", "Ok, ending this conversation now. Please click on Mic On once ready and I will assist you.","No Input from your end. Please click on Mic Button to start again.", "abort mic", "thanks for using Namsii"];
+              var scenarios = ["stop mic","Oops!!! Facing some Internal issue. Sorry for the inconvenience","Thank you for using Namsi! If you need any further assistance,Click the Mic button, and I'll be here to help you out! Goodbye!", "Ok, ending this conversation now. Please click on Mic On once ready and I will assist you.","No Input from your end. Please click on Mic Button to start again.", "abort mic", "thanks for using Namsii"];
               
                // Check if any scenario matches
-              var isMatched = false;
-              for (var i = 0; i < scenarios.length; i++) {
-                if (text.includes(scenarios[i])) {
-                  console.log("Scenario matched: " + scenarios[i]);
-                  isMatched = true;
-                  break; // Exit the loop once a match is found
-                }
-              }
+        var isMatched = false;
+        for (var i = 0; i < scenarios.length; i++) {
+          if (text.includes(scenarios[i])) {
+            console.log("Scenario matched: " + scenarios[i]);
+            isMatched = true;
+            break; // Exit the loop once a match is found
+          }
+        }
         
         // Call startVoiceInput() if no match found
         if (!isMatched) {
@@ -344,7 +340,8 @@
       chatLog1.innerHTML = `<p class="bot-text">Welcome to Namsii, the Voice Assistant who can handle all your ticket creation needs. Mic On and let me assist you!</p>`;
       chatLog.appendChild(chatLog1);
       voiceOutput("Welcome to Namsi, the Voice Assistant who can handle all your ticket creation needs. Mic On and let me assist you!");
-      }
+      
+    }
 
       WelcomeMsg();       
 
@@ -526,7 +523,7 @@
                 toggleMic();
                 let chatLog1 = document.createElement('div');
                 chatLog1.innerHTML += `<p class="user-message" sentTime="${currentTime}">${voiceText}</p>`;
-                isSoundDetected = true;
+
                 conversation.appendChild(chatLog1);
                 //chatLog1.scrollTop = chatLog.scrollHeight;
 

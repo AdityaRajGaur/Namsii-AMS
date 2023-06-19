@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-+6@1vj-)t@!3!md0@79cd^-ojt1z2o!m1j4-tdklu^l3o$0#kh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['allybot1.azurewebsites.net','127.0.0.1','namsii.azurewebsites.net']
+ALLOWED_HOSTS = ['allybot1.azurewebsites.net','127.0.0.1', '*']
 
 
 CORS_ALLOWED_ORIGINS = []
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'voicebotapp' ,
+    
 ]
 
 MIDDLEWARE = [

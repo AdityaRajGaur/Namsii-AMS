@@ -3,16 +3,22 @@ import speech_recognition as sr
 from .Jira_ticket import Rest_api_jira_call
 from django.http import JsonResponse
 from .openAi_extract_detail import open_api_call
-#from .response_handler import process_response
-from .check_input_for_details import check_input
-from .Intent_extraction import intent_extraction
-from .Random_query_handler import random_query_handler
-from .code_testing import check_if_all_details_are_present
-from .get_missing_details import check_if_all_details_are_presents
+# added by Surabhi
+import dialogflow
+from django.http import HttpResponse
+from django.http import HttpRequest
+from django.views.decorators.http import require_http_methods
+import os
+import time
+from google.cloud import dialogflow_v2beta1 as dialogflow
+import uuid
+from django.contrib.sessions.backends.db import SessionStore
 
-# 
+
 previous_response = ""
-application,description,summary,priority = "","","",""
+# session_id = str(uuid.uuid4())
+session_key = ""
+
 
 def index(request):
     return render(request, 'index.html')
@@ -20,161 +26,203 @@ def index(request):
 
 def chatbot(request):
     global previous_response
-    data ={}
+    data = {}
+    # print(request)
+    # session_id = 'voice_data'.session.cycle_key()
+    global session_id
+    session_id = '123'
+    # print('session id: ', session_id)
     if request.method == 'POST':
         if 'voice_data' in request.POST:
             # Handle voice input
             voice_data = request.POST['voice_data']
-            output = flow_control(voice_data)
-           
+
+            # print("message in test_code.py 28", voice_data)
             
+            print('session id: ', session_id)
+            output = chat_view(voice_data, session_id)
+            # print('Output Line 30', output)
+
+            if 'Please give me a moment to process the details.' in output:
+
+                voice_data = output.replace(
+                    'Please give me a moment to process the details.', '')
+                # print("Inside Output 36", voice_data)
+            #    add_waiting_time (request)
+                output = open_ai_and_jira_call(voice_data)
+            else:
+                print("Not Inside Output")
+                # output = chat_view(voice_data)
+                # print('Output line 32',output)
+
         else:
             # Handle text input
             message = request.POST['message']
 
-            output = flow_control(message)
+            if 'Please give me a moment to process the details.' in message:
+                message = message.replace(
+                    'Please give me a moment to process the details.', '')
+                print("message on line 50", message)
+                output = open_ai_and_jira_call(message)
+            else:
+                output = chat_view(message, session_id)
+                print('Output line 43', output)
         response = output
         previous_response = output
-        data = {'response': response, 'voice_output':True}
-        
-        #voice_output(data["response"])              #testing change
+        data = {'response': response, 'voice_output': True}
+
+        # voice_output(data["response"])  #testing change
         return JsonResponse(data)
     return render(request, 'chatbot_blue.html')
-    
-def flow_control(voice_data):
+
+
+def open_ai_and_jira_call(user_input):
     global previous_response
-    global application
-    global description
-    global summary
-    global priority
+    print("56 Get text user inputs for fetching details with message :", user_input)
 
-    if previous_response in ['Please provide the details for your ticket']:
-        if check_if_all_details_are_present(voice_data) == 'True':
-            output = check_det(voice_data)
-            print("output from check_det",output)
-        else:
-            output = 'Could you please elaborate the problem you are facing.A brief description is missing!'
-        return output
-
-
-        output = check_det(voice_data)
-        return output
-        # val =check_if_all_details_are_present(voice_data)
-        # print("val",val)
-        # print('val type:',type(val))
-        # if val == 'True':
-        #     check_det(voice_data)
-        # else:
-        #     return '0Please provide the details for your ticket'
-
-        
-        # check = check_if_all_details_are_present(voice_data)
-        # print('check:',type(check))
-        # if check == 'True':         #user has given all details along with +ive intent
-        #     result = check_det(voice_data)
-        #     output = result
-        #     return output
-        # else:
-        # if check_if_all_details_are_present(voice_data)== 'True':
-        #     output = check_det(voice_data)
-        
-        # return output
-
-
-    elif previous_response.startswith("Please provide the required details for:") or previous_response in ['Could you please elaborate the problem you are facing.A brief description is missing!'] or previous_response.startswith('Please provide details of'):
-        #get project,sum,des from user input//incomplete code
-        #proj,sum,des
-        text = voice_data+application+description+summary+priority
-        application,description,summary,priority = open_api_call(text)
-        issue_key=Rest_api_jira_call(application,description,summary,priority)
-        url = 'https://jira.nagarro.com/rest/api/2/issue/'+issue_key
-        output = 'Ticket created successfully,'+' Ticket number is: '+issue_key
-        return output
-    else:
-        intent= intent_extraction(voice_data)            #Get intent,true or false
-        if intent == 'True':                            #user wants to create a message
-            check =check_if_all_details_are_present(voice_data)
-            if check == 'True':         #user has given all details along with +ive intent
-                output = check_det(voice_data)
-                return output
-            else:
-                val,output = check_if_all_details_are_presents(voice_data)
-                if val == 0:
-                    return output
-                else:
-                    return check_det(voice_data)
-                #return check_det(voice_data)
-                #return 'Please provide the details for your ticket'
-        #output = process_response(voice_data)
-        else:                                   #user does not want to create a msg and do small talk
-            #send a normal reply to user from openAi
-            output = random_query_handler(voice_data)
-            return output
-
-#Get user confirmation for ticket creation
-def confirm_user_input():
-    return 'confirm'
-
-def check_det(voice_data):
-  
-    # missing_values= check_if_all_details_are_presents(voice_data)
-    
-    application,description,summary,priority=open_api_call(voice_data)
-    #proj,sum,des = open_api_call(voice_data)   #if any detail is given by user input already then extract it and if some required field is missing then request it
-    #check if all are given in input,or few are given
-    all_details_flag,missing_details_list = check_variables(application,description,summary,priority)
-
-
-    if all_details_flag == 1:
-        print("all details present")
-        issue_key=Rest_api_jira_call(application,description,summary,priority)
-        url = 'https://jira.nagarro.com/rest/api/2/issue/'+issue_key
-        output = 'Ticket created successfully,'+' Ticket number is: '+issue_key
-        return output
-    
-    else:
-        print("some details absent")
-        line = 'Please provide the required details for: '
-        if len(missing_details_list)>1:
-            words = ' and '.join(missing_details_list)
-        else:
-                words = missing_details_list[0]
-                output = line + ' ' + words.capitalize()
+    try:
+        proj, des, sum, prt = open_api_call(user_input)
+        print('project,summary and description from open ai call is: ', proj, sum, des, prt)
+    except:
+        print('Issue with the open api call')
+        return 'Error fetching details from openAI api'
+    try:
+        issue_key = Rest_api_jira_call(proj, sum, des, prt)
+        # issue_key = '1234'
+        print('inside jira create func')
+    except:
+        print("Error connecting via JIRA api")
+        return 'Error connecting to JIRA api'
+    if issue_key:
+        url = 'https://jira.nagarro.com/browse/'+issue_key
+        output = 'Please give me a moment to process the details for your issue-   \n\n' + user_input  + \
+            '\n\n Ticket created successfully,'+' Ticket number is: '+issue_key
         print(output)
+        previous_response = ""
         return output
 
 
-def check_variables(application,description,summary,priority):
-    if application and description and summary and priority:
-        # All variables are present
-        all_present = 1
-        print("All variables are present.")
-        return all_present,[application,summary,description,priority]
+# Added by Surabhi
+
+def chat_view(message, session_id):
+
+    print("inside chat_view", message)
+    # gcp authentication and project variables
+    GOOGLE_AUTHENTICATION_FILE_NAME = "dialogflow.json"
+    current_directory = os.path.dirname(os.path.realpath(__file__))
+    path = os.path.join(current_directory, GOOGLE_AUTHENTICATION_FILE_NAME)
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = path
+    GOOGLE_PROJECT_ID = "handy-digit-387917"
+    # session_id=session_id
+    context_short_name = "no_name"
+    session_id = session_id
+    print('session id117: ', session_id)
+    # handle input value depending on text input
+
+    input_value = message
+    context_name = "projects/" + GOOGLE_PROJECT_ID + "/agent/sessions/" + session_id + "/contexts/" + \
+        context_short_name.lower()
+
+    # set up parameters and request to call dialogflow detectintent endpoint
+  
+    language_code = 'en'
+    # session
+    # call dialogflow detectintent endpoint and save result in response
+    response = detect_intent_with_parameters(
+        project_id=GOOGLE_PROJECT_ID,
+        session_id=session_id,
+        # query_params=query_params_1,
+        language_code=language_code,
+        knowledge_base_id='NjY2OTEzNzgwNjA1NDM5MTgwOA',
+        user_input=input_value
+    )
+  
+    return response.query_result.fulfillment_text
+
+
+def detect_intent_with_parameters(project_id, session_id,  language_code, knowledge_base_id, user_input):
+
+    session_client = dialogflow.SessionsClient()
+
+    session = session_client.session_path(project_id, session_id)
+    print('Session path: {}\n'.format(session))
+
+    text = user_input
+
+    text_input = dialogflow.types.TextInput(
+        text=text, language_code=language_code)
+    query_input = dialogflow.types.QueryInput(text=text_input)
+
+    # Added for reading resposes from Knowledge Base
+    knowledge_base_path = dialogflow.KnowledgeBasesClient.knowledge_base_path(
+        project_id, knowledge_base_id
+    )
+    context_short_name = "no_name"
+    context_name = "projects/" + project_id + "/agent/sessions/" + session_id + "/contexts/" + \
+        context_short_name.lower()
+  
+
+    response = session_client.detect_intent(
+        session=session, query_input=query_input
+        # query_params=query_params
+    )
+
+    print('=' * 20)
+    print('Query text: {}'.format(response.query_result.query_text))
+    print('Detected intent: {} (confidence: {})\n'.format(
+        response.query_result.intent.display_name,
+        response.query_result.intent_detection_confidence
+    ))
+    print("Fulfillment text: {}\n".format(
+        response.query_result.fulfillment_text))
+
+    if response.query_result.fulfillment_text:
+        print('Fulfillment text: {}\n'.format(
+            response.query_result.fulfillment_text))
+        length = len(response.query_result.fulfillment_text)
+        print('Length is', length)
+
     else:
-        # Determine which variable(s) is/are missing
-        missing_variables = []
-        if not application:
-            all_present = 0
-            missing_variables.append("application name")
-        if not (summary or description):
-            all_present = 0
-            missing_variables.append("description")
-        if not priority:
-            all_present = 0
-            missing_variables.append("severity")
+        for text in [user_input,]:
+            query_params = dialogflow.QueryParameters(
+                knowledge_base_names=[knowledge_base_path]
+            )
+            text_input = dialogflow.TextInput(
+                text=text, language_code=language_code)
 
-        # Print the missing variables
-        print("The following variable(s) are missing:")
-        for variable in missing_variables:
-            print(variable)
+            request = dialogflow.DetectIntentRequest(
+                session=session, query_input=query_input, query_params=query_params
+            )
+        response = session_client.detect_intent(request=request)
+        # Process knowledge base answers
+        print("Knowledge Fulfillment text: {}\n".format(
+            response.query_result.fulfillment_text))
         
-        return all_present,missing_variables
+        
+        reponse = response.query_result.fulfillment_text
+        length = len(response.query_result.fulfillment_text)
+        # reset_dialogflow_context()
+        session_id = session_id + '1'
+        print('Line 228',session_id)
+        print('Length is', length)
 
+    if length > 1:
+        return response
+    else:
+        return 'Sorry, can you please say that again.'
+   
 
+def reset_dialogflow_context():
+    project_id = "handy-digit-387917"
+    session_id = str(uuid.uuid4())
+    print('inside reset context', session_id)
+    session_client = dialogflow.SessionsClient()
+    session_path = session_client.session_path(project_id, session_id)
 
+    # Construct a reset context request
+    reset_contexts_request = dialogflow.types.ResetContextsRequest(
+        session=session_path
+    )
 
-
-    
-
-
-
+    # Send the reset context request to Dialogflow
+    session_client.reset_contexts(reset_contexts_request)
