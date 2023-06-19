@@ -10,7 +10,7 @@ from .Random_query_handler import random_query_handler
 from .code_testing import check_if_all_details_are_present
 from .get_missing_details import check_if_all_details_are_presents
 
-
+# 
 previous_response = ""
 application,description,summary,priority = "","","",""
 
