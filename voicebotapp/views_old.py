@@ -1,3 +1,5 @@
+
+
 from django.shortcuts import render
 import speech_recognition as sr
 from .Jira_ticket import Rest_api_jira_call
@@ -13,46 +15,72 @@ import os
 import time
 from google.cloud import dialogflow_v2beta1 as dialogflow
 import uuid
-from django.contrib.sessions.backends.db import SessionStore
+# from django.contrib.sessions.backends.db import SessionStore
+# from django.core.cache import cache
 
-
-previous_response = ""
+session_id = str(uuid.uuid4())
+previous_response = None
 # session_id = str(uuid.uuid4())
-session_key = ""
-
 
 def index(request):
     return render(request, 'index.html')
 
-
+ 
 def chatbot(request):
     global previous_response
+    
     data = {}
-    # print(request)
-    # session_id = 'voice_data'.session.cycle_key()
-    global session_id
-    session_id = '123'
-    # print('session id: ', session_id)
+    # if request.method == 'GET':
+
+    #     # Clear session ID from cookie
+
+    #     session_keys = list(request.session.keys())
+
+    #     for key in session_keys:
+
+    #         del request.session[key]
+
+    #     request.session.create()
+
+    #     request.session['session_id'] = str(uuid.uuid4())
+    #     print('session if')
+
     if request.method == 'POST':
+        #session_id = cache.get('session_id')
+
+        # session_id = request.session.get('session_id', str(uuid.uuid4()))
+
+        print("session id from post:",session_id)
+
         if 'voice_data' in request.POST:
             # Handle voice input
             voice_data = request.POST['voice_data']
-
+            
             print("message in test_code.py 28", voice_data)
             
             print('session id: ', session_id)
             output = chat_view(voice_data, session_id)
-            print('Output Line 30', output)
+            print('Output Line 30-', output)
+            print('voice_data Output Line 30-', voice_data)
+            
+            if (('Application Name') in output and previous_response is None) or ('Severity') in output and previous_response is None:   
+                     
+             previous_response = voice_data
+             print ('previous_response is-',previous_response)
 
             if 'Please give me a moment to process the details.' in output:
-
+                
+                print ('previous_response is-',previous_response)
                 voice_data = output.replace(
-                    'Please give me a moment to process the details.', '')
-                print("Inside Output 36", voice_data)
+                    'Please wait a moment while I process the details', '')
+                print("Inside Output 36", previous_response+ voice_data)
             #    add_waiting_time (request)
-                output = open_ai_and_jira_call(voice_data)
+                output = open_ai_and_jira_call(previous_response + ' '+ voice_data)
+
+                
             else:
                 print("Not Inside Output")
+                
                 # output = chat_view(voice_data)
                 # print('Output line 32',output)
 
@@ -60,16 +88,16 @@ def chatbot(request):
             # Handle text input
             message = request.POST['message']
 
-            if 'Please give me a moment to process the details.' in message:
+            if 'Please wait a moment while I process the details' in message:
                 message = message.replace(
-                    'Please give me a moment to process the details.', '')
-                print("message on line 50", message)
-                output = open_ai_and_jira_call(message)
+                    'Please wait a moment while I process the details.', '')
+                print("message on line 50", previous_response+ message)
+                output = open_ai_and_jira_call(previous_response + ' '+ message)
             else:
                 output = chat_view(message, session_id)
                 print('Output line 43', output)
         response = output
-        previous_response = output
+        # previous_response = output
         data = {'response': response, 'voice_output': True}
 
         # voice_output(data["response"])  #testing change
@@ -78,28 +106,30 @@ def chatbot(request):
 
 
 def open_ai_and_jira_call(user_input):
-    global previous_response
+    
     print("56 Get text user inputs for fetching details with message :", user_input)
 
     try:
+        print('Going inside open API call for: ', user_input)
         proj, des, sum, prt = open_api_call(user_input)
         print('project,summary and description from open ai call is: ', proj, sum, des, prt)
     except:
         print('Issue with the open api call')
         return 'Error fetching details from openAI api'
     try:
-        issue_key = Rest_api_jira_call(proj, sum, des)
+        issue_key = Rest_api_jira_call(proj, sum, des, prt)
         # issue_key = '1234'
         print('inside jira create func')
     except:
         print("Error connecting via JIRA api")
         return 'Error connecting to JIRA api'
-    if issue_key:
+    if issue_key and ('error') not in issue_key:
         url = 'https://jira.nagarro.com/browse/'+issue_key
         output = 'Please give me a moment to process the details for your issue-   \n\n' + user_input  + \
             '\n\n Ticket created successfully,'+' Ticket number is: '+issue_key
         print(output)
-        previous_response = ""
+        global previous_response
+        previous_response = None
         return output
 
 
@@ -200,8 +230,13 @@ def detect_intent_with_parameters(project_id, session_id,  language_code, knowle
         print('Fulfillment text: {}\n'.format(
             response.query_result.fulfillment_text))
         length = len(response.query_result.fulfillment_text)
-        print('Length is', length)
+        # print ('previous_response id- ', previous_response)
+        # print('Length prev is', len(previous_response))
+        global previous_response
 
+        if ('the issue details') in response.query_result.fulfillment_text:   
+         previous_response= None     
+    
     else:
         for text in [user_input,]:
             query_params = dialogflow.QueryParameters(
