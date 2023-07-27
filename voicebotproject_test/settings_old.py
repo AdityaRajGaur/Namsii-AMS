@@ -17,7 +17,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SESSION_SAVE_EVERY_REQUEST = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -93,20 +92,21 @@ WSGI_APPLICATION = 'voicebotproject_test.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc',
+        #'NAME': BASE_DIR / 'db.sqlite3',
         'NAME':  'Namsii',
-         'USER': 'Namsii',
+        'USER': 'namsii',
         'PASSWORD': 'Voicebot@2023',
-        'HOST': 'namsii-ams.database.windows.net',
+        'HOST': 'tcp:namsii.database.windows.net',
         'PORT': '1433',
         'OPTIONS': {
-            'driver': 'ODBC Driver 17 for SQL Server',  # Use appropriate driver based on your configuration
+            'driver': 'ODBC Driver 18 for SQL Server', 
 
                    }
                 }
 }
 #connection string
 # conn_str= "Driver={ODBC Driver 18 for SQL Server};Server=tcp:namsii.database.windows.net,1433;Database=Namsii;Uid=namsii;Pwd={your_password_here};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
-# # Connecting to database via connection string
+# Connecting to database via connection string
 # DATABASES['Namsii'].update(conn_str)
 # Cache settings
 CACHES = {

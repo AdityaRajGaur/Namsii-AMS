@@ -3,11 +3,11 @@ import json
 import os
 
 
-def Rest_api_jira_call(project,summary,description):
+def Rest_api_jira_call(project,summary,description, priority):
 # Jira API endpoint and authentication details
-    url = "https://jira.nagarro.com/rest/api/2/issue/"
+    url = "https://esams.atlassian.net/rest/api/2/issue/"
     print("inside the function fro rest api call")
-    print(project,summary,description)
+    print(project,summary,description, priority)
     # Get the current working directory
     cwd = os.getcwd()
     print(cwd)
@@ -30,24 +30,15 @@ def Rest_api_jira_call(project,summary,description):
     payload = {
         "fields": {
             "project": {
-                "id": "20351"
+                "id": "10000"
             },
             "summary": summary,
             "description": description,
             "issuetype": {
-                "id": "1"
+                "id": "10004"
             },
         
-            "customfield_28741":{ "value":"External Testing"},
-
-
-            "customfield_10023": { "value":"Oversight"},
- 
-
-            "customfield_28740": { "value":"To Be Assigned"},
- 
-
-            "customfield_10015": { "value":"None"}
+            "customfield_10033":{ "value":priority}
 
         }
     }
@@ -60,7 +51,7 @@ def Rest_api_jira_call(project,summary,description):
         #print("Issue created successfully.")
         issue_key = response.json()["key"]
         print("Issue Number:", issue_key)
-        link= "https://jira.nagarro.com/browse/"+ issue_key
+        link= "https://esams.atlassian.net/browse/"+ issue_key
         return issue_key
     else:
         print("Failed to create issue. Status code:", response.status_code)

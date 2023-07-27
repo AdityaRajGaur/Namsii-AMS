@@ -1,178 +1,289 @@
+
+
 from django.shortcuts import render
-
 import speech_recognition as sr
-
-import pyttsx3
-import os
 from .Jira_ticket import Rest_api_jira_call
-import json
-
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from .openAi_extract_detail import open_api_call
+from .response_handler import process_response
+# added by Surabhi
+import dialogflow
+from django.http import HttpResponse
+from django.http import HttpRequest
+from django.views.decorators.http import require_http_methods
+import os
+import time
+from google.cloud import dialogflow_v2beta1 as dialogflow
+import uuid
+# from django.contrib.sessions.backends.db import SessionStore
+# from django.core.cache import cache
 
-from subprocess import Popen
-#from jira_api import Rest_api_jira_call
-import logging
+session_id = str(uuid.uuid4())
+previous_response = None
+# session_id = str(uuid.uuid4())
 
+def index(request):
+    return render(request, 'index.html')
 
-
-
-def openapp(request):
-    return render(request, 'openapp.html')
-
-
+ 
 def chatbot(request):
+    global previous_response
+    
+    data = {}
+    # if request.method == 'GET':
+
+    #     # Clear session ID from cookie
+
+    #     session_keys = list(request.session.keys())
+
+    #     for key in session_keys:
+
+    #         del request.session[key]
+
+    #     request.session.create()
+
+    #     request.session['session_id'] = str(uuid.uuid4())
+    #     print('session if')
+
     if request.method == 'POST':
+        #session_id = cache.get('session_id')
+
+        # session_id = request.session.get('session_id', str(uuid.uuid4()))
+
+        print("session id from post:",session_id)
+
         if 'voice_data' in request.POST:
             # Handle voice input
             voice_data = request.POST['voice_data']
-            logging.debug(f"voice_data: {voice_data}")
-            print(voice_data)
-            # text_result = recognize_from_microphone()
-            # print(text_result)
-            if voice_data:
-                # Process the text result and generate a response
-                response = process_response(voice_data)
+            
+            print("message in test_code.py 28", voice_data)
+            
+            print('session id: ', session_id)
+            output = chat_view(voice_data, session_id)
+            print('Output Line 30-', output)
+            print('voice_data Output Line 30-', voice_data)
+            
+            if (('Application Name') in output and previous_response is None) or ('Severity') in output and previous_response is None:   
+                     
+             previous_response = voice_data
+             print ('previous_response is-',previous_response)
+
+            if 'Please give me a moment to process the details.' in output:
+                
+                print ('previous_response is-',previous_response)
+                voice_data = output.replace(
+                    'Please wait a moment while I process the details', '')
+                print("Inside Output 36", previous_response+ voice_data)
+            #    add_waiting_time (request)
+                output = open_ai_and_jira_call(previous_response + ' '+ voice_data)
+
+                
             else:
-                response = "Sorry, I couldn't recognize your speech."
-
-            # response = str(response)
-
-            data = {'response': response}
-
-            print("data", data)
-
-            # response = process_response(voice_data)
-
-            voice_output(data["response"])
-            return JsonResponse(data)
+                print("Not Inside Output")
+                
+                # output = chat_view(voice_data)
+                # print('Output line 32',output)
 
         else:
             # Handle text input
             message = request.POST['message']
-            logging.debug(f"message: {message}")
-            print("message in view.py", message)
-            response = process_response(message)
-            data = {'response': response}
-            print("data", data)
-            voice_output(data["response"])
-            #value = data.get('response')
-            return JsonResponse(data)
 
+            if 'Please wait a moment while I process the details' in message:
+                message = message.replace(
+                    'Please wait a moment while I process the details.', '')
+                print("message on line 50", previous_response+ message)
+                output = open_ai_and_jira_call(previous_response + ' '+ message)
+            else:
+                output = chat_view(message, session_id)
+                print('Output line 43', output)
+        response = output
+        # previous_response = output
+        data = {'response': response, 'voice_output': True}
+
+        # voice_output(data["response"])  #testing change
+        return JsonResponse(data)
     return render(request, 'chatbot_blue.html')
 
 
+def open_ai_and_jira_call(user_input):
+    
+    print("56 Get text user inputs for fetching details with message :", user_input)
 
-def process_response(message):
-    # if message == 'Hello.':
-    #    return 'Hi there!'
+    try:
+        print('Going inside open API call for: ', user_input)
+        proj, des, sum, prt = open_api_call(user_input)
+        print('project,summary and description from open ai call is: ', proj, sum, des, prt)
+    except:
+        print('Issue with the open api call')
+        return 'Error fetching details from openAI api'
+    try:
+        issue_key = Rest_api_jira_call(proj, sum, des, prt)
+        # issue_key = '1234'
+        print('inside jira create func')
+    except:
+        print("Error connecting via JIRA api")
+        return 'Error connecting to JIRA api'
+    if issue_key and ('error') not in issue_key:
+        url = 'https://jira.nagarro.com/browse/'+issue_key
+        output = 'Please give me a moment to process the details for your issue-   \n\n' + user_input  + \
+            '\n\n Ticket created successfully,'+' Ticket number is: '+issue_key
+        print(output)
+        global previous_response
+        previous_response = None
+        return output
 
-    # elif message.lower() in ["yes.", "i want to create a jira ticket."]:
-    #    return "Could you please tell me the project name?"
 
-    # else:
-    #    return "I'm sorry, I didn't understand. Please type something!"
+# Added by Surabhi
 
-    if message.lower() in ["hello.", "hi.", "good morning.", "what's up", "yo", "how are you", "how are you?", "how are you.", "how r u?"]:
-        return 'Hi, I am a Ally Voice Bot. How can I help you!'
+def chat_view(message, session_id):
 
-    elif message.lower() in ["i want to create jira ticket.","create jira ticket.", "create a ticket.", "start a new ticket.", "open a jira ticket", "make a jira ticket", "report a bug", "start a ticket", "start new ticket", "a jira ticket", "initiate a jira ticket.", "enerate a Jira ticket.", "set up a jira ticket.", "establish a jira ticket.", "craft a jira ticket.", "begin a jira ticket.", "create a new jira task.", "Set up a new Jira ticket.", "I want to create JIRA ticket. "]:
-        return "Sure. Could you please tell me the issue details!"
+    print("inside chat_view", message)
+    # gcp authentication and project variables
+    GOOGLE_AUTHENTICATION_FILE_NAME = "dialogflow.json"
+    current_directory = os.path.dirname(os.path.realpath(__file__))
+    path = os.path.join(current_directory, GOOGLE_AUTHENTICATION_FILE_NAME)
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = path
+    GOOGLE_PROJECT_ID = "handy-digit-387917"
+    # session_id=session_id
+    context_short_name = "no_name"
+    session_id = session_id
+    print('session id117: ', session_id)
+    # handle input value depending on text input
 
-    elif ("I have an issue" in message) or ("I am working on" in message) or ("I am facing issue" in message) or ("I'm facing issue" in message):
-        print("Inside the Issue detail condition")
-        response = jiraApi(message)
-            #response = {'response': response}
-        return response
-            
+    input_value = message
+    context_name = "projects/" + GOOGLE_PROJECT_ID + "/agent/sessions/" + session_id + "/contexts/" + \
+        context_short_name.lower()
+
+    # set up parameters and request to call dialogflow detectintent endpoint
+    # parameters = dialogflow.types.struct_pb2.Struct()
+    # context_1 = dialogflow.types.context_pb2.Context(
+    #     name=context_name,
+    #     lifespan_count=6,
+    #     parameters=parameters
+    # )
+    # query_params_1 = {"contexts": [context_1]}
+    language_code = 'en'
+
+    # call dialogflow detectintent endpoint and save result in response
+    response = detect_intent_with_parameters(
+        project_id=GOOGLE_PROJECT_ID,
+        session_id=session_id,
+        # query_params=query_params_1,
+        language_code=language_code,
+        knowledge_base_id='NjY2OTEzNzgwNjA1NDM5MTgwOA',
+        user_input=input_value
+    )
+    # print('response inside chatview is: ',response.query_result.fulfillment_text)
+
+    # return httpresponse received from the detectintent API
+    return response.query_result.fulfillment_text
 
 
-#############
-# Furture Improvement:
-# Return response 'Requesting details' & capturing & creating jira ticket
-#############
+def detect_intent_with_parameters(project_id, session_id,  language_code, knowledge_base_id, user_input):
 
-    elif message.lower() in ["fine.", "i am good.", "i am doing good.", "i'm good."]:
+    session_client = dialogflow.SessionsClient()
 
-        return "Great! How can I help you?"
+    session = session_client.session_path(project_id, session_id)
+    print('Session path: {}\n'.format(session))
 
-    elif message.lower() in ["thank you.", "thanks a lot.", "appreciate it."]:
+    text = user_input
 
-        return "You're welcome! If you need any further assistance, feel free to ask."
+    text_input = dialogflow.types.TextInput(
+        text=text, language_code=language_code)
+    query_input = dialogflow.types.QueryInput(text=text_input)
 
+    # Added for reading resposes from Knowledge Base
+    knowledge_base_path = dialogflow.KnowledgeBasesClient.knowledge_base_path(
+        project_id, knowledge_base_id
+    )
+    context_short_name = "no_name"
+    context_name = "projects/" + project_id + "/agent/sessions/" + session_id + "/contexts/" + \
+        context_short_name.lower()
+    # parameters = dialogflow.types.Struct()
+    # context_1 = dialogflow.types.context_pb2.Context(
+    #     name=context_name,
+    #     lifespan_count=6,
+    #     parameters=parameters
+    # )
+    # query_params = {"contexts": [context_1]}
+
+    # request = dialogflow.DetectIntentRequest(
+    #         session=session, query_input=query_input, query_params=query_params
+    #     )
+    # response = session_client.detect_intent(request=request)
+
+    response = session_client.detect_intent(
+        session=session, query_input=query_input
+        # query_params=query_params
+    )
+
+    print('=' * 20)
+    print('Query text: {}'.format(response.query_result.query_text))
+    print('Detected intent: {} (confidence: {})\n'.format(
+        response.query_result.intent.display_name,
+        response.query_result.intent_detection_confidence
+    ))
+    print("Fulfillment text: {}\n".format(
+        response.query_result.fulfillment_text))
+
+    if response.query_result.fulfillment_text:
+        print('Fulfillment text: {}\n'.format(
+            response.query_result.fulfillment_text))
+        length = len(response.query_result.fulfillment_text)
+        # print ('previous_response id- ', previous_response)
+        # print('Length prev is', len(previous_response))
+        global previous_response
+
+        if ('the issue details') in response.query_result.fulfillment_text:   
+         previous_response= None     
+    
     else:
+        for text in [user_input,]:
+            query_params = dialogflow.QueryParameters(
+                knowledge_base_names=[knowledge_base_path]
+            )
+            text_input = dialogflow.TextInput(
+                text=text, language_code=language_code)
 
-        return "I'm sorry, but I couldn't understand your request. Could you please rephrase or provide more information?"
+            request = dialogflow.DetectIntentRequest(
+                session=session, query_input=query_input, query_params=query_params
+            )
+        response = session_client.detect_intent(request=request)
+        # Process knowledge base answers
+        print("Knowledge Fulfillment text: {}\n".format(
+            response.query_result.fulfillment_text))
+        knowledge_answers = response.query_result.knowledge_answers
+        # length = len(knowledge_answers)
+        print('knowledge_answers',knowledge_answers)
+        print(len(response.query_result.fulfillment_text))
+        reponse = response.query_result.fulfillment_text
+        length = len(response.query_result.fulfillment_text)
+        # reset_dialogflow_context()
+        session_id = session_id + '1'
+        print('Line 228',session_id)
+        print('Length is', length)
 
-
-def voice_output(request):
-
-    engine = pyttsx3.init()
-
-    engine.say(request)
-    engine.runAndWait()
-
-
-def jiraApi(request):
-
-    #if ("I have an issue" in message) or ("I am working on" in message) or ("I am facing issue" in message):
-    print("matched! for creating jira ticket using description")
-    description1 = request
-    summary1 = "TestfromPython-1"
-    print(description1, summary1)
-    #import json
-    result = Rest_api_jira_call(summary1, description1)
-    #result1, result2, result3 = Rest_api_jira_call(summary1, description1)
-    print("result1:", result)
-    #print("result2:", result2)
-    #print("result3", result3)
-    success = 0
-
-    if (success == 0):
-        # elif (message == "No. You can proceed with the same." or message == "No.You can proceed with the same." or message == "You can proceed with the same." or message == "Issue type is fine." or message == "Go ahead." or message == "No problem. Go ahead." or message == "No problem Go ahead."):
-        #response = "Sure. Please allow me sometime to generate JIRA ticket. I will update soon."
-        #return(result1,result2)
-        #result = "Jira Ticket created successfully"
-        
-        return result
-        #response = result1
-        
-
-        #response = result2
-        
+    if length > 1:
+        return response
+    else:
+        return 'Sorry, can you please say that again.'
+    # knowledge_answers = response.query_result.knowledge_answers
+    # for answers in knowledge_answers.answers:
+    #         print(" - Answer: {}".format(answers.answer))
+    #         print(" - Confidence: {}".format(answers.match_confidence))
 
 
-        print(result)
+def reset_dialogflow_context():
+    project_id = "handy-digit-387917"
+    session_id = str(uuid.uuid4())
+    print('inside reset context', session_id)
+    session_client = dialogflow.SessionsClient()
+    session_path = session_client.session_path(project_id, session_id)
 
+    # Construct a reset context request
+    reset_contexts_request = dialogflow.types.ResetContextsRequest(
+        session=session_path
+    )
 
-#    from .speech_recognition1 import recognize_from_microphone
-
-#    message = recognize_from_microphone()
-#    print(speech_recognition_result)
-    # response = process_response(speech_recognition_result)
-    # data = {'result': response}
-    # return JsonResponse(data)
-
-#    if request.method == 'POST':
-#        voice_data = request.POST.get('voice_data')
-
-    # Process the voice data and generate a response
-#        response = process_response(voice_data)
-#        print(response)
-
-    # Create a dictionary with the response
-#        data = {'result': response}
-
-#        return JsonResponse(data)
-
-    # voice_i = speech_reco
-    # print (process1);
-
-# def send_message(request):
-#    if request.method == 'POST':
-#        message = request.POST.get('message')
-    # Process the message and generate a bot response
-#        response = process_response(message)
-#        return JsonResponse({'response': response})
-
-#   return render(request, 'chatbot.html')
+    # Send the reset context request to Dialogflow
+    session_client.reset_contexts(reset_contexts_request)
