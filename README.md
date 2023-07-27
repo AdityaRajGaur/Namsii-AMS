@@ -25,15 +25,4 @@ Namsii is an intelligent voice assistant designed to handle all your ticket mana
 3. Start speaking the commands to interact with the voice assistant.
 4. Use natural language to create, manage, and update tickets.
 5. Enjoy the convenience of hands-free ticket management with Namsii.
-
-## Getting Started - Local Development
-
-To run the Namsii Voice Assistant on your local machine for development and testing purposes, follow these steps:
-
-1. Clone the repository to your local machine.
-2. Set up the required development environment with Python, Django, and other dependencies.
-3. Configure the Django settings to work with your local database and ticket service tools.
-4. Start the Django development server.
-5. Access the web-based voice assistant through your local server URL.
-
 ---
