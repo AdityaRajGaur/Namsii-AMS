@@ -20,7 +20,7 @@ Namsii is an intelligent voice assistant designed to handle all your ticket mana
 
 ## How to Use
 
-1. Access the Namsii Voice Assistant through the provided web URL[namsii-ams.azurewebsites.net]
+1. Access the Namsii Voice Assistant through the provided web URL[]
 2. Click on the microphone icon to activate voice recognition.
 3. Start speaking the commands to interact with the voice assistant.
 4. Use natural language to create, manage, and update tickets.
